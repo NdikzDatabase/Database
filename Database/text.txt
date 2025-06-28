@@ -1,0 +1,59 @@
+const fs = require('fs');
+const path = require('path');
+const axios = require('axios');
+const FormData = require('form-data');
+
+module.exports = {
+  command: ['tourl'],
+  category: ['tools'],
+  description: 'Upload media ke GitHub dan dapatkan URL',
+
+  async run(msg, client) {
+    const q = msg.quoted || msg;
+    const mime = (q.msg || q).mimetype || "";
+
+    let fileBuffer, fileName;
+
+    if (mime) {
+      fileBuffer = await q.download();
+      const ext = mime.split("/")[1] || "bin";
+      fileName = `upload.${ext}`;
+    } else if (q.text) {
+      fileBuffer = Buffer.from(q.text, "utf-8");
+      fileName = "text.txt";
+    } else {
+      return msg.reply("🚨 Balas media atau kirim teks untuk di-upload.");
+    }
+
+    // Pastikan folder ./tmp tersedia
+    const tmpDir = path.resolve('./tmp');
+    if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
+    const filepath = path.join(tmpDir, fileName);
+    fs.writeFileSync(filepath, fileBuffer);
+
+    const form = new FormData();
+    form.append('file', fs.createReadStream(filepath));
+
+    msg.reply('⏳ Mengunggah file ke GitHub...');
+
+    try {
+      const res = await axios.post('https://upload-github.vercel.app/api/upload', form, {
+        headers: form.getHeaders()
+      });
+
+      const { url, raw_url } = res.data;
+      if (!url || !raw_url) throw new Error('Gagal mendapatkan URL dari server.');
+
+      await msg.reply(`╭━━『 *UPLOAD SUCCESS* 』
+┃ 📁 *File:* ${fileName}
+┃ 🔗 *URL:* ${raw_url}
+┃ ℹ️ *Host:* github.com
+╰━━━━━━━━━━━━⬣`
+      );
+    } catch (err) {
+      await msg.reply(`❌ Gagal upload:\n${err.message}`);
+    } finally {
+      if (fs.existsSync(filepath)) fs.unlinkSync(filepath);
+    }
+  }
+};
