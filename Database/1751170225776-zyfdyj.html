@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Generator by Ndikz</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --bg-color: #100f1c; --card-color: #1d1b31; --primary-color: #9f7aea;
+            --primary-glow: rgba(159, 122, 234, 0.3); --text-color: #f0f0f0;
+            --text-secondary: #a0aec0; --input-bg: #2b2942; --border-color: #4a5568;
+            --success-color: #2dd4bf; --danger-color: #f43f5e;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+        }
+
+        body.light-mode {
+            --bg-color: #f4f7fc; --card-color: #ffffff; --primary-color: #8b5cf6;
+            --primary-glow: rgba(139, 92, 246, 0.2); --text-color: #1f2937;
+            --text-secondary: #6b7280; --input-bg: #f3f4f6; --border-color: #d1d5db;
+            --success-color: #10b981; --danger-color: #ef4444;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-color); color: var(--text-color); transition: background-color 0.3s, color 0.3s; }
+
+        .page { display: none; }
+        .page.active { display: block; }
+        
+        #selector-page {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 100vh; padding: 2rem;
+            animation: fadeIn 1s ease-out;
+        }
+        #selector-page h1 { font-size: 2.5rem; color: var(--text-color); margin-bottom: 1rem; text-align: center; }
+        #selector-page p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 3rem; text-align: center; }
+        
+        .template-carousel {
+            display: flex; gap: 2rem; max-width: 100%;
+            overflow-x: auto; scroll-snap-type: x mandatory;
+            padding-bottom: 1.5rem;
+        }
+        .template-carousel::-webkit-scrollbar { height: 8px; }
+        .template-carousel::-webkit-scrollbar-track { background: var(--input-bg); border-radius: 10px; }
+        .template-carousel::-webkit-scrollbar-thumb { background-color: var(--primary-color); border-radius: 10px; }
+
+        .template-card {
+            flex: 0 0 300px; aspect-ratio: 4 / 5.5; background-color: var(--card-color);
+            border-radius: 16px; scroll-snap-align: center; cursor: pointer;
+            overflow: hidden; position: relative; display: flex; flex-direction: column;
+            border: 2px solid transparent; transition: all 0.4s ease;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+        .template-card:hover { transform: translateY(-10px); border-color: var(--primary-color); box-shadow: 0 10px 30px var(--primary-glow); }
+        .template-card-img { width: 100%; height: 75%; overflow: hidden; }
+        .template-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .template-card:hover .template-card-img img { transform: scale(1.05); }
+        .template-card-info { padding: 1.5rem; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+        .template-card-info h3 { font-size: 1.4rem; color: var(--text-color); }
+        
+        #generator-page { padding: 2rem; animation: fadeIn 1s ease-out; }
+        .generator-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap; }
+        .generator-header h1 { font-size: 2.2rem; color: var(--primary-color); margin-right: auto; }
+        .btn-back { background: var(--card-color); color: var(--text-color); padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: 500; transition: all 0.3s ease; border: 1px solid var(--border-color); }
+        .btn-back:hover { background-color: var(--input-bg); }
+        
+        .theme-switcher { display: flex; align-items: center; cursor: pointer; background-color: var(--input-bg); padding: 5px; border-radius: 20px; }
+        .theme-switcher span { font-size: 1.2rem; padding: 0 8px; }
+        #theme-toggle { appearance: none; width: 40px; height: 20px; background-color: var(--card-color); border-radius: 10px; position: relative; cursor: pointer; transition: background-color 0.3s; }
+        #theme-toggle::before { content: ''; position: absolute; width: 16px; height: 16px; border-radius: 50%; background-color: var(--primary-color); top: 2px; left: 2px; transition: transform 0.3s ease; }
+        #theme-toggle:checked::before { transform: translateX(20px); }
+
+        .generator-container {
+            display: grid; grid-template-columns: 400px 1fr; gap: 2rem;
+            width: 100%; max-width: 1800px; margin: 0 auto;
+        }
+
+        .controls-panel {
+            background-color: var(--card-color); padding: 1.5rem; border-radius: 16px;
+            max-height: calc(100vh - 150px); overflow-y: auto;
+        }
+        .controls-panel::-webkit-scrollbar { width: 6px; }
+        .controls-panel::-webkit-scrollbar-track { background: transparent; }
+        .controls-panel::-webkit-scrollbar-thumb { background-color: var(--primary-color); border-radius: 10px; }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group:last-child { margin-bottom: 0; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-secondary); font-size: 0.9rem; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 0.75rem 1rem; background-color: var(--input-bg);
+            border: 1px solid var(--border-color); border-radius: 8px;
+            color: var(--text-color); font-size: 1rem; transition: all 0.3s ease;
+        }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px var(--primary-glow); }
+        
+        .download-btn {
+            width: 100%; padding: 0.8rem; background-image: linear-gradient(45deg, var(--primary-color), #7a4ed3);
+            border: none; border-radius: 8px; color: white; font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(159, 122, 234, 0.2); margin-top: 1.5rem;
+        }
+        .download-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(159, 122, 234, 0.4); }
+
+        .preview-panel h2 { text-align: center; color: var(--text-secondary); font-weight: 500; margin-bottom: 1rem; }
+        .preview-frame-container {
+            background-color: var(--card-color); border-radius: 16px;
+            overflow: hidden; height: calc(100vh - 150px);
+        }
+        #preview-frame { width: 100%; height: 100%; border: none; background-color: #fff; }
+        
+        .form-section {
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .form-section-header {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .project-card-form { background: var(--card-color); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; border: 1px solid var(--border-color); }
+        .project-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .project-header h4 { color: var(--text-secondary); }
+        .btn-delete-project { background-color: var(--danger-color); color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 1.2rem; line-height: 1; }
+        .btn-add-project {
+            width: 100%; padding: 0.7rem; background: var(--success-color); border-radius: 8px;
+            color: white; font-weight: 600; cursor: pointer; margin-top: 0.5rem; border: none;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        @media (max-width: 1200px) {
+            .generator-container { grid-template-columns: 1fr; }
+            .controls-panel, .preview-frame-container { max-height: none; height: 80vh; }
+        }
+        @media (max-width: 768px) {
+            #selector-page h1 { font-size: 2rem; }
+            #selector-page p { font-size: 1rem; }
+            .template-card { flex: 0 0 250px; }
+            .controls-panel, .preview-frame-container { height: 70vh; }
+        }
+    </style>
+</head>
+<body>
+
+    <main id="selector-page" class="page active">
+        <h1>Website Generator</h1>
+        <p>Pilih template di bawah ini untuk memulai.</p>
+        <div class="template-carousel" id="template-carousel-container"></div>
+    </main>
+
+    <main id="generator-page" class="page">
+        <header class="generator-header">
+            <h1 id="generator-title">Generator</h1>
+            <div class="theme-switcher">
+                <span>☀️</span>
+                <input type="checkbox" id="theme-toggle">
+                <span>🌙</span>
+            </div>
+            <a href="#" id="back-to-selector" class="btn-back">← Kembali Memilih</a>
+        </header>
+        <div class="generator-container">
+            <aside class="controls-panel" id="controls-panel-container"></aside>
+            <div class="preview-panel">
+                <h2>Live Preview</h2>
+                <div class="preview-frame-container">
+                    <iframe id="preview-frame" title="Live Preview"></iframe>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const templates = {
+            payment: {
+                id: 'payment',
+                name: 'Website Payment',
+                previewImage: 'https://raw.githubusercontent.com/NdikzDatabase/Database/main/Database/1751169627247-jkxmd0.png',
+                getControlsHTML: () => `
+                    <div class="form-section">
+                        <h4 class="form-section-header">Informasi Dasar</h4>
+                        <div class="form-group">
+                            <label for="p-name">Nama Website (cth: Payment Ndikz)</label>
+                            <input type="text" id="p-name" class="data-field" value="Payment NdikzWanggy">
+                        </div>
+                        <div class="form-group">
+                            <label for="p-profileUrl">URL Foto Profil</label>
+                            <input type="text" id="p-profileUrl" class="data-field" value="https://files.catbox.moe/gqmb50.jpg">
+                        </div>
+                    </div>
+                    <div class="form-section">
+                        <h4 class="form-section-header">Kontak & Pembayaran</h4>
+                        <div class="form-group">
+                            <label for="p-paymentNumber">Nomor DANA & GoPay</label>
+                            <input type="text" id="p-paymentNumber" class="data-field" value="082241182487">
+                        </div>
+                        <div class="form-group">
+                            <label for="p-waNumber">Nomor WhatsApp (Format: 628...)</label>
+                            <input type="text" id="p-waNumber" class="data-field" value="6282241182487">
+                        </div>
+                        <div class="form-group">
+                            <label for="p-qrisUrl">URL Gambar QRIS (Kosongkan jika tidak ada)</label>
+                            <input type="text" id="p-qrisUrl" class="data-field" value="https://files.catbox.moe/lhb9in.jpeg">
+                        </div>
+                    </div>
+                    <button class="download-btn">Download index.html</button>
+                `,
+                gatherData: () => ({
+                    name: document.getElementById('p-name').value,
+                    profileUrl: document.getElementById('p-profileUrl').value,
+                    paymentNumber: document.getElementById('p-paymentNumber').value,
+                    waNumber: document.getElementById('p-waNumber').value,
+                    qrisUrl: document.getElementById('p-qrisUrl').value
+                }),
+                generateFinalHTML: (data) => {
+                    const qrisButtonHTML=data.qrisUrl?`<button class="payment-btn" data-method="qris"><svg viewBox="0 0 24 24"><path d="M4,4H10V10H4V4M20,4V10H14V4H20M14,14H20V20H14V14M4,14H10V20H4V14M12,2H2V12H12V2M2,12V22H12V12H2M12,12V22H22V12H12M12,2H22V12H12V2Z"/></svg><span>QRIS</span></button>`:'';
+                    const qrisModalHTML=data.qrisUrl?`<div class="qris-modal" id="qrisModal"><div class="qris-modal-content"><img src="${data.qrisUrl}" alt="QRIS Code" class="qris-image"><div class="modal-buttons"><a href="${data.qrisUrl}" download="QRIS_Payment.jpeg" class="modal-btn download-btn">Download</a><button class="modal-btn close-btn" id="closeQrisBtn">Close</button></div></div></div>`:'';
+                    const qrisScriptLogic=data.qrisUrl?`if(t==="qris"){paymentDetailsContainer.innerHTML='',qrisModal.style.display="flex"}else{s(t)}`:`s(t)`;
+                    const qrisModalElements=data.qrisUrl?`const qrisModal=document.getElementById("qrisModal"),closeQrisBtn=document.getElementById("closeQrisBtn");function o(){qrisModal.style.display="none"}closeQrisBtn.addEventListener("click",o),qrisModal.addEventListener("click",(e=>{e.target===qrisModal&&o()}));`:'';
+                    const danaButton=data.paymentNumber?`<button class="payment-btn" data-method="dana"><svg viewBox="0 0 24 24"><path d="M12.83,11.17C12.5,10.5,12,10,12,10C12,10,12,10,12,10C11.67,10,11.5,10.17,11.17,10.83C10.5,11.5,10,12,10,12C10,12,10,12,10,12C10,12.33,10.17,12.5,10.83,13.17C11.5,13.83,12,14,12,14C12,14,12,14,12,14C12.33,14,12.5,13.83,13.17,13.17C13.83,12.5,14,12,14,12C14,12,14,12,14,12C14,11.67,13.83,11.5,13.17,10.83M12,2C12.53,2 13,2.19 13.41,2.59L19.41,8.59C19.81,9 20,9.47 20,10V12C20,12.53 19.81,13 19.41,13.41L13.41,19.41C13,19.81 12.53,20 12,20H10C9.47,20 9,19.81 8.59,19.41L2.59,13.41C2.19,13 2,12.53 2,12V10C2,9.47 2.19,9 2.59,8.59L8.59,2.59C9,2.19 9.47,2 10,2H12M12,4H10L4,10V12L10,18H12L18,12V10L12,4Z"/></svg><span>DANA</span></button>`:'';
+                    const gopayButton=data.paymentNumber?`<button class="payment-btn" data-method="gopay"><svg viewBox="0 0 24 24"><path d="M16.12,15.36L12,12.93L7.88,15.36L8.91,10.61L5.09,7.24L9.94,6.73L12,2.27L14.06,6.73L18.91,7.24L15.09,10.61L16.12,15.36M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20Z"/></svg><span>GoPay</span></button>`:'';
+                    const renderDetailsLogic=data.paymentNumber?`if("dana"===t||"gopay"===t){const e=t.charAt(0).toUpperCase()+t.slice(1);a=\`<div class="account-info"><div class="details-header">Nomor \${e}</div><div class="account-number">\${l.nomor}</div><button class="copy-btn" id="copyBtn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/></svg> <span>Salin Nomor</span></button></div>\`}paymentDetailsContainer.innerHTML=a;if("dana"===t||"gopay"===t){const e=document.getElementById("copyBtn");e.addEventListener("click",(()=>n(l.nomor,e)))}`:`if("dana"===t||"gopay"===t)paymentDetailsContainer.innerHTML='<div class="account-info"><p style="color:var(--text-secondary-color);">Nomor tidak tersedia.</p></div>'`;
+                    return`<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${data.name}</title><style>@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');:root{--light-bg:#f0f2f5;--light-card:#fff;--light-text:#1c1e21;--light-text-secondary:#65676b;--light-primary:#007bff;--light-primary-glow:rgba(0,123,255,.4);--light-accent:#00c6fb;--light-success:#28a745;--dark-bg:#0d1b2a;--dark-card:#1b263b;--dark-text:#e0e1dd;--dark-text-secondary:#a8b2d1;--dark-primary:#4facfe;--dark-primary-glow:rgba(79,172,254,.5);--dark-accent:#00f2fe;--dark-success:#20c997;--shadow-color:rgba(0,0,0,.1)}[data-theme=light]{--bg-color:var(--light-bg);--card-color:var(--light-card);--text-color:var(--light-text);--text-secondary-color:var(--light-text-secondary);--primary-color:var(--light-primary);--primary-glow-color:var(--light-primary-glow);--accent-color:var(--light-accent);--success-color:var(--light-success);--shadow-color:rgba(0,0,0,.1)}[data-theme=dark]{--bg-color:var(--dark-bg);--card-color:var(--dark-card);--text-color:var(--dark-text);--text-secondary-color:var(--dark-text-secondary);--primary-color:var(--dark-primary);--primary-glow-color:var(--dark-primary-glow);--accent-color:var(--dark-accent);--success-color:var(--dark-success);--shadow-color:rgba(0,0,0,.4)}*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}body{display:flex;justify-content:center;align-items:center;min-height:100vh;background-color:var(--bg-color);color:var(--text-color);transition:background-color .5s ease,color .5s ease;padding:20px}[data-theme=dark] body{background-image:linear-gradient(rgba(13,27,42,.85),rgba(13,27,42,.95)),url(https://files.catbox.moe/5iedde.jpg);background-size:cover;background-position:center center;background-attachment:fixed}.theme-switcher{position:fixed;top:20px;right:20px;width:50px;height:26px;background:var(--card-color);border-radius:25px;cursor:pointer;padding:4px;box-shadow:0 2px 10px var(--shadow-color);border:1px solid var(--primary-color);z-index:100}.theme-switcher-toggle{height:18px;width:18px;background:var(--primary-color);border-radius:50%;transition:transform .4s cubic-bezier(.68,-.55,.27,1.55)}[data-theme=dark] .theme-switcher-toggle{transform:translateX(24px)}.payment-container{max-width:420px;width:100%;background:var(--card-color);border-radius:24px;padding:35px;box-shadow:0 10px 40px 0 var(--shadow-color);animation:glowing-border 6s ease-in-out infinite,fadeIn 1s ease-out;text-align:center;border:2px solid transparent;position:relative;overflow:hidden;backdrop-filter:blur(5px)}[data-theme=light] .payment-container{background:var(--card-color)}[data-theme=dark] .payment-container{background:rgba(27,38,59,.75)}@keyframes glowing-border{0%{border-color:var(--primary-color);box-shadow:0 0 20px var(--primary-glow-color)}50%{border-color:var(--accent-color);box-shadow:0 0 30px var(--accent-color)}100%{border-color:var(--primary-color);box-shadow:0 0 20px var(--primary-glow-color)}}@keyframes fadeIn{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}.header{margin-bottom:30px}.profile-pic{width:100px;height:100px;border-radius:50%;object-fit:cover;border:4px solid var(--primary-color);box-shadow:0 0 20px var(--primary-glow-color);margin-bottom:15px;transition:transform .4s cubic-bezier(.175,.885,.32,1.275)}.profile-pic:hover{transform:scale(1.08) rotate(6deg)}.header h1{font-size:2rem;font-weight:700;color:var(--text-color);letter-spacing:.5px}.payment-methods{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:15px;margin-bottom:30px}.payment-btn{background:transparent;border:2px solid var(--text-secondary-color);color:var(--text-secondary-color);border-radius:16px;cursor:pointer;font-size:.9rem;font-weight:600;transition:all .4s ease;transform:scale(1);padding:15px 10px;display:flex;flex-direction:column;align-items:center;gap:8px}.payment-btn svg{width:32px;height:32px;transition:all .3s ease;fill:currentColor}.payment-btn:hover{border-color:var(--primary-color);color:var(--primary-color);transform:translateY(-5px);box-shadow:0 6px 15px var(--primary-glow-color)}.payment-btn.active{background-image:linear-gradient(45deg,var(--primary-color) 0%,var(--accent-color) 100%);color:#fff;border-color:transparent;transform:scale(1.05) translateY(-5px);box-shadow:0 8px 25px var(--primary-glow-color)}.payment-btn.active svg{transform:scale(1.1)}.payment-details{min-height:120px;margin-bottom:30px}.account-info{animation:reveal .6s cubic-bezier(.165,.84,.44,1);background-color:var(--bg-color);padding:20px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:15px}@keyframes reveal{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}.details-header{font-size:1rem;font-weight:500;color:var(--text-secondary-color)}.account-number{font-size:1.5rem;font-weight:700;color:var(--primary-color);letter-spacing:1px;word-break:break-all}.copy-btn{background-image:linear-gradient(45deg,var(--primary-color) 0%,var(--accent-color) 100%);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:600;cursor:pointer;transition:all .3s ease;display:flex;align-items:center;gap:8px;box-shadow:0 4px 15px var(--primary-glow-color)}.copy-btn:hover{transform:scale(1.05);box-shadow:0 6px 20px var(--primary-glow-color)}.copy-btn.copied{background:var(--success-color);box-shadow:0 4px 15px rgba(32,201,151,.4)}.instructions{margin-bottom:30px;color:var(--text-secondary-color);font-size:.9rem;line-height:1.6}.instructions span{font-weight:600;color:var(--primary-color)}.whatsapp-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background-color:#25d366;color:#fff;padding:12px 25px;border-radius:50px;text-decoration:none;font-weight:600;box-shadow:0 4px 15px rgba(37,211,102,.4);transition:all .3s cubic-bezier(.175,.885,.32,1.275)}.whatsapp-btn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 6px 20px rgba(37,211,102,.5)}.qris-modal{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.8);backdrop-filter:blur(8px);display:none;justify-content:center;align-items:center;z-index:1000;animation:fadeInModal .4s ease}@keyframes fadeInModal{from{opacity:0}to{opacity:1}}.qris-modal-content{position:relative;padding:20px;background:var(--card-color);border-radius:15px;text-align:center;animation:zoomIn .4s cubic-bezier(.175,.885,.32,1.275);max-width:90%;max-height:90%}@keyframes zoomIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}.qris-image{max-width:100%;max-height:60vh;border-radius:10px;margin-bottom:20px}.modal-buttons{display:flex;justify-content:center;gap:15px}.modal-btn{padding:10px 20px;border-radius:8px;border:none;font-weight:600;cursor:pointer;transition:all .3s ease;color:#fff;font-size:1rem;text-decoration:none}.download-btn{background-image:linear-gradient(45deg,var(--primary-color) 0%,var(--accent-color) 100%)}.close-btn{background-color:#dc3545}.modal-btn:hover{opacity:.9;transform:scale(1.05)}</style></head><body data-theme="dark"><div class="theme-switcher" id="themeSwitcher"><div class="theme-switcher-toggle"></div></div><div class="payment-container"><div class="header"><img src="${data.profileUrl||'https://via.placeholder.com/100'}" alt="Profile Picture" class="profile-pic"><h1>${data.name||'Payment Page'}</h1></div><div class="payment-methods">${danaButton}${gopayButton}${qrisButtonHTML}</div><div class="payment-details" id="paymentDetails"><div class="account-info" style="border-style:solid;border-color:transparent"><p>Pilih metode pembayaran di atas.</p></div></div><div class="instructions"><p>Setelah transfer, mohon kirimkan bukti pembayaran ke <span>${(data.name||'Admin').replace('Payment ','')}</span> melalui WhatsApp.</p></div><a href="https://wa.me/${data.waNumber||'628123456789'}?text=Halo%20${(data.name||'Admin').replace('Payment ','')},%20saya%20ingin%20mengirimkan%20bukti%20pembayaran." target="_blank" class="whatsapp-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>Hubungi WhatsApp</a></div>${qrisModalHTML}<script>document.addEventListener("DOMContentLoaded",(()=>{const e=document.getElementById("themeSwitcher"),c=document.querySelectorAll(".payment-btn"),paymentDetailsContainer=document.getElementById("paymentDetails"),d=localStorage.getItem("theme")||"dark";document.body.setAttribute("data-theme",d),e.addEventListener("click",(()=>{const e=document.body.getAttribute("data-theme"),t="dark"===e?"light":"dark";document.body.setAttribute("data-theme",t),localStorage.setItem("theme",t)}));const l={nomor:"${data.paymentNumber}",qrisUrl:"${data.qrisUrl}"},n=(e,t)=>{navigator.clipboard.writeText(e).then((()=>{const e=t.innerHTML;t.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg> <span>Tersalin!</span>',t.classList.add("copied"),setTimeout((()=>{t.innerHTML=e,t.classList.remove("copied")}),2e3)})).catch((e=>{console.error("Gagal menyalin: ",e)}))},s=t=>{let a="";${renderDetailsLogic}};c.forEach((e=>{e.addEventListener("click",(()=>{const t=e.dataset.method;c.forEach((e=>e.classList.remove("active"))),e.classList.add("active"),${qrisScriptLogic}}))})),${qrisModalElements}}));<\/script></body></html>`
+                }
+            },
+            portfolio: {
+                id: 'portfolio',
+                name: 'Website Portofolio',
+                previewImage: 'https://raw.githubusercontent.com/NdikzDatabase/Database/main/Database/1751169058982-7x02vz.png',
+                getProjectFieldsHTML: (p = {}) => `
+                    <div class="project-card-form">
+                        <div class="project-header">
+                            <h4>Proyek Baru</h4>
+                            <button type="button" class="btn-delete-project">×</button>
+                        </div>
+                        <div class="form-group"><label>Judul Proyek</label><input type="text" class="project-title" value="${p.title || ''}"></div>
+                        <div class="form-group"><label>Deskripsi Singkat</label><input type="text" class="project-desc" value="${p.description || ''}"></div>
+                        <div class="form-group"><label>URL Gambar Proyek</label><input type="text" class="project-img" value="${p.image || ''}"></div>
+                        <div class="form-group"><label>URL Live Demo</label><input type="text" class="project-url" value="${p.url || ''}"></div>
+                        <div class="form-group"><label>URL GitHub (Kosongkan jika tidak ada)</label><input type="text" class="project-github" value="${p.github || ''}"></div>
+                    </div>
+                `,
+                getControlsHTML: function() { 
+                    const initialProjects = [
+                        { title: "Web Design Agency", description: "Landing page modern untuk agensi desain dengan animasi interaktif.", image: "https://picsum.photos/seed/project1/400/300", url: "#", github: "#" },
+                        { title: "E-commerce Dashboard", description: "Dashboard analitik yang responsif untuk platform e-commerce.", image: "https://picsum.photos/seed/project2/400/300", url: "#", github: "#" }
+                    ];
+                    return `
+                    <div class="form-section">
+                        <h4 class="form-section-header">Informasi Utama</h4>
+                        <div class="form-group"><label for="pf-name">Nama Anda / Logo</label><input type="text" id="pf-name" value="NdikzOne"></div>
+                        <div class="form-group"><label for="pf-title">Jabatan / Keahlian</label><input type="text" id="pf-title" value="Prompt Engineer"></div>
+                        <div class="form-group"><label for="pf-profilePic">URL Foto Profil (Utama & Kontak)</label><input type="text" id="pf-profilePic" value="https://files.catbox.moe/gqmb50.jpg"></div>
+                        <div class="form-group"><label for="pf-waNumber">Nomor WhatsApp (cth: 628...)</label><input type="text" id="pf-waNumber" value="6283143776050"></div>
+                        <div class="form-group"><label for="pf-greeting">Sapaan (cth: Halo, Saya)</label><input type="text" id="pf-greeting" value="Halo, Saya"></div>
+                        <div class="form-group"><label for="pf-intro">Paragraf Perkenalan</label><textarea id="pf-intro">Selamat datang di persimpangan antara imajinasi dan kecerdasan buatan. Saya merancang dan menyempurnakan prompt untuk AI, mengubah ide-ide kompleks menjadi hasil yang presisi dan kreatif.</textarea></div>
+                    </div>
+                    <div class="form-section">
+                        <h4 class="form-section-header">Tentang Saya</h4>
+                        <div class="form-group"><label for="pf-aboutTitle">Sub-Judul (cth: Prompt Engineer & AI Specialist)</label><input type="text" id="pf-aboutTitle" value="Prompt Engineer & AI Specialist"></div>
+                        <div class="form-group"><label for="pf-aboutText">Paragraf Tentang Saya</label><textarea id="pf-aboutText">Saya adalah seorang spesialis yang berfokus pada seni berkomunikasi dengan model kecerdasan buatan. Misi saya adalah untuk membuka potensi penuh dari teknologi AI.</textarea></div>
+                    </div>
+                    <div class="form-section">
+                        <h4 class="form-section-header">Sosial Media</h4>
+                        <div class="form-group"><label for="pf-facebook">URL Facebook</label><input type="text" id="pf-facebook" value="#"></div>
+                        <div class="form-group"><label for="pf-instagram">URL Instagram</label><input type="text" id="pf-instagram" value="#"></div>
+                    </div>
+                    <div class="form-section">
+                        <h4 class="form-section-header">Proyek</h4>
+                        <div id="projects-container-form">${initialProjects.map(p => this.getProjectFieldsHTML(p)).join('')}</div>
+                        <button type="button" class="btn-add-project">+ Tambah Proyek</button>
+                    </div>
+                    <button class="download-btn">Download index.html</button>
+                    `
+                },
+                gatherData: () => {
+                    const projects = Array.from(document.querySelectorAll('.project-card-form')).map(card => ({
+                        title: card.querySelector('.project-title').value,
+                        description: card.querySelector('.project-desc').value,
+                        image: card.querySelector('.project-img').value,
+                        url: card.querySelector('.project-url').value,
+                        github: card.querySelector('.project-github').value
+                    }));
+                    return {
+                        name: document.getElementById('pf-name').value,
+                        title: document.getElementById('pf-title').value,
+                        profilePic: document.getElementById('pf-profilePic').value,
+                        waNumber: document.getElementById('pf-waNumber').value,
+                        greeting: document.getElementById('pf-greeting').value,
+                        intro: document.getElementById('pf-intro').value,
+                        aboutTitle: document.getElementById('pf-aboutTitle').value,
+                        aboutText: document.getElementById('pf-aboutText').value,
+                        facebook: document.getElementById('pf-facebook').value,
+                        instagram: document.getElementById('pf-instagram').value,
+                        projects: projects
+                    };
+                },
+                generateFinalHTML: (data) => {
+                    const socialLinks=()=>{let t='';data.facebook&&(t+=`<a href="${data.facebook}" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>`);data.instagram&&(t+=`<a href="${data.instagram}" target="_blank"><i class="fa-brands fa-instagram"></i></a>`);data.waNumber&&(t+=`<a href="https://wa.me/${data.waNumber}" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>`);return t};
+                    const projectsHTML=data.projects.map(p=>{const t=p.github?`<a href="${p.github}" target="_blank"><i class="fa-brands fa-github"></i></a>`:'';return`<div class="project-card"><img src="${p.image||'https://via.placeholder.com/400x300'}" alt="${p.title||'Project'}"><div class="project-layer"><h4>${p.title||'Project Title'}</h4><p>${p.description||'Project description.'}</p><a href="${p.url||'#'}" target="_blank"><i class="fa-solid fa-link"></i></a>${t}</div></div>`}).join('');
+                    return`<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${data.name||"Portfolio"}</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap);:root{--primary-color-light:#0af;--secondary-color-light:#ff4081;--background-color-light:#e6f7ff;--surface-color-light:#fff;--text-color-light:#1e272e;--glow-color-light:rgba(0,170,255,.5);--primary-color-dark:#00c3ff;--secondary-color-dark:#ff5252;--background-color-dark:#101418;--surface-color-dark:#1a2027;--text-color-dark:#e0e6f0;--glow-color-dark:rgba(0,195,255,.4);--primary-color:var(--primary-color-light);--secondary-color:var(--secondary-color-light);--background-color:var(--background-color-light);--surface-color:var(--surface-color-light);--text-color:var(--text-color-light);--glow-color:var(--glow-color-light);--shadow:0 10px 30px -15px rgba(0,0,0,.2);--transition-smooth:all .4s cubic-bezier(.25,.8,.25,1)}body.dark-mode{--primary-color:var(--primary-color-dark);--secondary-color:var(--secondary-color-dark);--background-color:var(--background-color-dark);--surface-color:var(--surface-color-dark);--text-color:var(--text-color-dark);--glow-color:var(--glow-color-dark);--shadow:0 10px 30px -15px rgba(0,0,0,.5)}*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;text-decoration:none;list-style:none;border:none;outline:none}html{scroll-behavior:smooth}body{background-color:var(--background-color);color:var(--text-color);transition:var(--transition-smooth);overflow-x:hidden;position:relative}body::before{content:'';position:fixed;top:50%;left:50%;width:150vmax;height:150vmax;background:radial-gradient(circle,var(--primary-color) 0%,var(--secondary-color) 40%,transparent 70%);transform:translate(-50%,-50%);opacity:.15;z-index:-1;animation:backgroundRotate 25s linear infinite}section{min-height:100vh;padding:10rem 9% 2rem;display:flex;align-items:center;justify-content:center;position:relative;z-index:1}.header{position:fixed;top:0;left:0;width:100%;padding:2rem 9%;display:flex;justify-content:space-between;align-items:center;z-index:1000;background-color:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.2);transition:var(--transition-smooth)}body.dark-mode .header{background-color:rgba(26,32,39,.2);border-bottom:1px solid rgba(255,255,255,.1)}.logo{font-size:2.5rem;color:var(--primary-color);font-weight:700;cursor:pointer;transition:var(--transition-smooth);z-index:1003}.logo:hover{transform:scale(1.05);text-shadow:0 0 15px var(--glow-color)}.navigation-controls{position:fixed;top:2rem;right:4%;display:flex;align-items:center;gap:2rem;z-index:1002}.theme-switch-wrapper{display:flex;align-items:center}.theme-switch{display:inline-block;height:24px;position:relative;width:48px}.theme-switch input{display:none}.slider{background-color:var(--surface-color);border:1px solid var(--primary-color);bottom:0;cursor:pointer;left:0;position:absolute;right:0;top:0;transition:.4s;border-radius:34px}.slider:before{background-color:var(--primary-color);bottom:2px;content:"";height:18px;left:3px;position:absolute;transition:.4s;width:18px;border-radius:50%}input:checked+.slider{background-color:var(--surface-color-dark)}input:checked+.slider:before{transform:translateX(24px)}#menu-toggle{width:5rem;height:5rem;background:var(--surface-color);border:2px solid var(--primary-color);border-radius:50%;display:flex;justify-content:center;align-items:center;cursor:pointer;transition:var(--transition-smooth);box-shadow:var(--shadow);z-index:1003}#menu-toggle i{font-size:2.4rem;color:var(--primary-color);transition:transform .4s ease}#menu-toggle:hover{transform:scale(1.1)}body.menu-active #menu-toggle i{transform:rotate(135deg)}.navbar{position:absolute;top:calc(100% + 1rem);right:0;background:var(--surface-color);border-radius:1rem;width:18rem;box-shadow:var(--shadow);padding:1rem 0;opacity:0;transform-origin:top right;transform:scale(.95) translateY(-10px);pointer-events:none;transition:transform .3s ease,opacity .3s ease}body.menu-active .navbar{opacity:1;transform:scale(1) translateY(0);pointer-events:auto}.navbar a{display:block;padding:1.2rem 2rem;font-size:1.6rem;color:var(--text-color);transition:var(--transition-smooth)}.navbar a:hover{background-color:var(--primary-color);color:var(--surface-color);padding-left:2.5rem}.navbar a.active{color:var(--primary-color);font-weight:600}#home{flex-direction:row;gap:2rem}.home-content{max-width:60rem;animation:slideInLeft 1s cubic-bezier(.25,.8,.25,1) forwards}.home-content h3{font-size:3.2rem;font-weight:700}.home-content h3:nth-of-type(2){margin-bottom:2rem}span{color:var(--primary-color)}.home-content h1{font-size:5.6rem;font-weight:700;line-height:1.3}.home-content p{font-size:1.6rem}.home-img{position:relative;width:35vw;max-width:400px;height:35vw;max-height:400px;animation:zoomIn 1s cubic-bezier(.25,.8,.25,1) forwards}.home-img .glowing-circle{position:relative;width:100%;height:100%;border-radius:50%;display:flex;justify-content:center;align-items:center}.home-img .glowing-circle::after{content:'';position:absolute;width:98%;height:98%;background-color:var(--background-color);border-radius:50%;z-index:1}.home-img .glowing-circle .image{position:relative;width:95%;height:95%;border-radius:50%;overflow:hidden;z-index:2}.home-img .glowing-circle .image img{width:100%;height:100%;object-fit:cover}.glowing-circle span{position:absolute;width:100%;height:100%;background:linear-gradient(var(--primary-color),var(--secondary-color));border-radius:50%;animation:circleRotate 5s linear infinite}.glowing-circle span:nth-child(1){filter:blur(10px)}.social-media a{display:inline-flex;justify-content:center;align-items:center;width:4rem;height:4rem;background:transparent;border:.2rem solid var(--primary-color);border-radius:50%;font-size:2rem;color:var(--primary-color);margin:3rem 1.5rem 3rem 0;transition:var(--transition-smooth)}.social-media a:hover{background:var(--primary-color);color:var(--surface-color);box-shadow:0 0 1.5rem var(--glow-color)}.btn{display:inline-block;padding:1.2rem 2.8rem;background:var(--primary-color);border-radius:4rem;box-shadow:0 0 1rem var(--glow-color);font-size:1.6rem;color:var(--surface-color);letter-spacing:.1rem;font-weight:600;transition:var(--transition-smooth);border:2px solid transparent}.btn:hover{box-shadow:0 0 2rem var(--glow-color),0 0 3rem var(--glow-color);background:transparent;color:var(--primary-color);border-color:var(--primary-color)}.section-container{position:relative;width:100%}.section-container::before{content:'';position:absolute;top:-100px;left:0;width:100%;height:100px;background:linear-gradient(to top,var(--background-color),transparent);z-index:10}#about{flex-direction:column;gap:2rem;background:var(--surface-color);clip-path:polygon(0 15%,100% 0,100% 85%,0 100%)}.heading{text-align:center;font-size:4.5rem}.about-content{text-align:center;max-width:70rem}.about-content h3{font-size:2.6rem}.about-content p{font-size:1.6rem;margin:2rem 0 3rem}#projects{flex-direction:column;gap:4rem}.projects-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:3rem;width:100%}.project-card{position:relative;border-radius:2rem;overflow:hidden;display:flex;background:var(--surface-color);box-shadow:var(--shadow);transition:var(--transition-smooth)}.project-card:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 20px 40px -15px rgba(0,0,0,.3)}.project-card img{width:100%;height:200px;object-fit:cover;transition:var(--transition-smooth)}.project-card:hover img{transform:scale(1.05)}.project-layer{position:absolute;bottom:0;left:0;width:100%;height:100%;background:linear-gradient(rgba(0,0,0,.1),var(--primary-color));display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;padding:0 4rem;transform:translateY(100%);transition:var(--transition-smooth)}.project-card:hover .project-layer{transform:translateY(0)}.project-layer h4{font-size:2.2rem;color:#fff;font-weight:600}.project-layer p{font-size:1.4rem;margin:.3rem 0 1rem;color:#eee}.project-layer a{display:inline-flex;justify-content:center;align-items:center;width:4rem;height:4rem;background:#fff;border-radius:50%;font-size:1.8rem;color:var(--secondary-color);margin:.5rem;transition:var(--transition-smooth)}.project-layer a:hover{transform:scale(1.1);box-shadow:0 0 15px #fff}#contact{background-color:var(--surface-color);flex-direction:column;gap:3rem;clip-path:polygon(0 15%,100% 0,100% 100%,0 100%)}.business-card{background:linear-gradient(135deg,var(--background-color),var(--surface-color));padding:4rem 3rem;border-radius:2.5rem;text-align:center;max-width:450px;width:100%;box-shadow:var(--shadow);border:1px solid var(--primary-color-light);display:flex;flex-direction:column;align-items:center;transition:var(--transition-smooth)}body.dark-mode .business-card{border:1px solid var(--primary-color-dark)}.business-card:hover{transform:translateY(-1rem);box-shadow:0 20px 40px -15px rgba(0,0,0,.4)}.card-profile-pic{width:150px;height:150px;border-radius:50%;object-fit:cover;border:5px solid var(--primary-color);margin-bottom:2rem;box-shadow:0 0 20px var(--glow-color)}.card-name{font-size:3rem;color:var(--text-color);font-weight:700}.card-skill{font-size:1.8rem;color:var(--primary-color);font-weight:500;margin-bottom:2rem}.card-contact-info{font-size:1.6rem;color:var(--text-color);margin-bottom:2.5rem}.card-contact-info i{margin-right:1rem;color:var(--secondary-color)}.card-whatsapp-btn{display:inline-flex;align-items:center;gap:1rem;padding:1.2rem 2.5rem;background:#25d366;color:#fff;border-radius:5rem;font-size:1.8rem;font-weight:600;transition:var(--transition-smooth)}.card-whatsapp-btn i{font-size:2.2rem}.card-whatsapp-btn:hover{transform:scale(1.05);box-shadow:0 5px 20px rgba(37,211,102,.4)}@keyframes backgroundRotate{100%{transform:translate(-50%,-50%) rotate(360deg)}}@keyframes circleRotate{100%{transform:rotate(360deg)}}@keyframes slideInLeft{0%{transform:translateX(-100px);opacity:0}100%{transform:translateX(0);opacity:1}}@keyframes zoomIn{0%{transform:scale(.5);opacity:0}100%{transform:scale(1);opacity:1}}@media (max-width:1200px){html{font-size:55%}section{padding:10rem 3% 2rem}}@media (max-width:991px){.header{padding:2rem 3%}.logo{z-index:1003}#home{flex-direction:column-reverse;text-align:center;gap:5rem}#home h1{font-size:5rem}.home-img{width:70vw;height:70vw;margin-top:4rem}#about,#contact{clip-path:polygon(0 5%,100% 0,100% 95%,0 100%)}}@media (max-width:450px){html{font-size:50%}.home-img{width:80vw;height:80vw}}</style></head><body><header class="header"><a href="#home" class="logo">${data.name||"Portfolio"}</a></header><div class="navigation-controls"><div class="theme-switch-wrapper"><label class="theme-switch" for="checkbox"><input type="checkbox" id="checkbox"><div class="slider"></div></label></div><div id="menu-toggle"><i class="fa-solid fa-bars"></i></div><nav class="navbar"><a href="#home" class="active">Home</a><a href="#about">About</a><a href="#projects">Projects</a><a href="#contact">Contact</a></nav></div><section id="home"><div class="home-content"><h3>${data.greeting||"Hello, It's Me"}</h3><h1>${data.name||"Your Name"}</h1><h3><span>${data.title||"Your Title"}</span></h3><p>${data.intro||"Welcome to my portfolio. Here you can find my projects and information about me."}</p><div class="social-media">${socialLinks()}</div><a href="#contact" class="btn">Hubungi Saya</a></div><div class="home-img"><div class="glowing-circle"><span></span><div class="image"><img src="${data.profilePic||'https://via.placeholder.com/400'}" alt="Foto Profil"></div></div></div></section><section id="about" class="section-container"><div class="about-content"><h2 class="heading">About <span>Me</span></h2><h3>${data.aboutTitle||"My Expertise"}</h3><p>${data.aboutText||"I am a passionate developer with experience in creating modern and responsive web applications."}</p><a href="#projects" class="btn">Lihat Proyek Saya</a></div></section><section id="projects" class="section-container"><h2 class="heading">Latest <span>Projects</span></h2><div class="projects-container">${projectsHTML}</div></section><section id="contact"><div class="business-card"><img src="${data.profilePic||'https://via.placeholder.com/150'}" alt="Foto Profil Kontak" class="card-profile-pic"><h2 class="card-name">${data.name||"Your Name"}</h2><p class="card-skill">${data.title||"Your Title"}</p><p class="card-contact-info"><i class="fa-solid fa-phone"></i> +${data.waNumber?data.waNumber.slice(0,2)+' '+data.waNumber.slice(2,5)+'-'+data.waNumber.slice(5,9)+'-'+data.waNumber.slice(9):"62 812-3456-7890"}</p><a href="https://wa.me/${data.waNumber||'6281234567890'}" target="_blank" class="card-whatsapp-btn"><i class="fa-brands fa-whatsapp"></i> Chat di WhatsApp</a></div></section><script>document.addEventListener("DOMContentLoaded",function(){const e=document.getElementById("menu-toggle"),t=document.querySelectorAll(".navbar a"),o=document.querySelectorAll("section"),n=document.getElementById("checkbox"),s=document.body,c=()=>{s.classList.toggle("menu-active")};e.addEventListener("click",c),t.forEach(e=>{e.addEventListener("click",()=>{s.classList.contains("menu-active")&&c()})});const l=()=>{let e="home";o.forEach(t=>{const o=t.offsetTop;pageYOffset>=o-window.innerHeight/2&&(e=t.getAttribute("id"))}),t.forEach(t=>{t.classList.remove("active"),t.getAttribute("href").includes(e)&&t.classList.add("active")})};window.addEventListener("scroll",l);const a=localStorage.getItem("theme");a&&(s.classList.toggle("dark-mode","dark"===a),n.checked="dark"===a),n.addEventListener("change",function(){this.checked?(s.classList.add("dark-mode"),localStorage.setItem("theme","dark")):(s.classList.remove("dark-mode"),localStorage.setItem("theme","light"))}),l()});<\/script></body></html>`
+                }
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const pages = {
+                selector: document.getElementById('selector-page'),
+                generator: document.getElementById('generator-page')
+            };
+            const carouselContainer = document.getElementById('template-carousel-container');
+            const controlsContainer = document.getElementById('controls-panel-container');
+            const generatorTitle = document.getElementById('generator-title');
+            const backToSelectorBtn = document.getElementById('back-to-selector');
+            const previewFrame = document.getElementById('preview-frame');
+            const themeToggle = document.getElementById('theme-toggle');
+
+            let currentTemplateId = null;
+
+            const applyTheme = (theme) => {
+                if (theme === 'light') {
+                    document.body.classList.add('light-mode');
+                    themeToggle.checked = false;
+                } else {
+                    document.body.classList.remove('light-mode');
+                    themeToggle.checked = true;
+                }
+                localStorage.setItem('generator-theme', theme);
+            };
+
+            const switchPage = (pageId) => {
+                Object.values(pages).forEach(page => page.classList.remove('active'));
+                pages[pageId].classList.add('active');
+            };
+
+            const renderSelector = () => {
+                carouselContainer.innerHTML = Object.values(templates)
+                    .map(template => `
+                        <div class="template-card" data-template-id="${template.id}">
+                            <div class="template-card-img">
+                                <img src="${template.previewImage}" alt="${template.name}">
+                            </div>
+                            <div class="template-card-info">
+                                <h3>${template.name}</h3>
+                            </div>
+                        </div>
+                    `).join('');
+            };
+
+            const updatePreview = () => {
+                if (!currentTemplateId) return;
+                const template = templates[currentTemplateId];
+                const data = template.gatherData();
+                const htmlContent = template.generateFinalHTML(data);
+                previewFrame.srcdoc = htmlContent;
+                return htmlContent;
+            };
+
+            const downloadFile = () => {
+                const htmlContent = updatePreview();
+                const blob = new Blob([htmlContent], { type: 'text/html' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `${currentTemplateId}-page.html`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(link.href);
+            };
+
+            const renderGenerator = (templateId) => {
+                currentTemplateId = templateId;
+                const template = templates[templateId];
+                generatorTitle.textContent = `${template.name} Generator`;
+                controlsContainer.innerHTML = template.getControlsHTML();
+                updatePreview();
+            };
+            
+            controlsContainer.addEventListener('input', updatePreview);
+
+            controlsContainer.addEventListener('click', (e) => {
+                if (!currentTemplateId) return;
+
+                if (e.target.matches('.btn-add-project')) {
+                    const projectsContainer = document.getElementById('projects-container-form');
+                    if(projectsContainer && templates.portfolio) {
+                        const newProjectHTML = templates.portfolio.getProjectFieldsHTML();
+                        projectsContainer.insertAdjacentHTML('beforeend', newProjectHTML);
+                        updatePreview();
+                    }
+                }
+                if (e.target.matches('.btn-delete-project')) {
+                    e.target.closest('.project-card-form').remove();
+                    updatePreview();
+                }
+                if (e.target.matches('.download-btn')) {
+                    downloadFile();
+                }
+            });
+
+            carouselContainer.addEventListener('click', (e) => {
+                const card = e.target.closest('.template-card');
+                if (card) {
+                    const templateId = card.dataset.templateId;
+                    switchPage('generator');
+                    renderGenerator(templateId);
+                    pages.generator.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+
+            backToSelectorBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentTemplateId = null;
+                switchPage('selector');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            themeToggle.addEventListener('change', () => {
+                const newTheme = themeToggle.checked ? 'dark' : 'light';
+                applyTheme(newTheme);
+            });
+
+            const savedTheme = localStorage.getItem('generator-theme') || 'dark';
+            applyTheme(savedTheme);
+
+            renderSelector();
+        });
+    </script>
+</body>
+</html>
