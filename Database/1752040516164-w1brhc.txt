@@ -1,0 +1,2 @@
+Plugin berhasil disimpan ke `owner/apikey.js`.
+Hot-reload akan mencoba memuatnya secara otomatis.
