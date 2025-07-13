@@ -1,0 +1,31 @@
+{
+  id: '3EB05872749BAF2129B42E',
+  sender: '6285720014027@s.whatsapp.net',
+  fromMe: true,
+  isBot: false,
+  message: Message {
+    extendedTextMessage: ExtendedTextMessage {
+      text: '⏳ Memproses audio...',
+      previewType: 0,
+      contextInfo: [ContextInfo],
+      inviteLinkGroupTypeV2: 0,
+      linkPreviewMetadata: LinkPreviewMetadata {}
+    }
+  },
+  type: 'extendedTextMessage',
+  msg: ExtendedTextMessage {
+    text: '⏳ Memproses audio...',
+    previewType: 0,
+    contextInfo: ContextInfo {
+      mentionedJid: [],
+      groupMentions: [],
+      statusAttributions: [],
+      forwardingScore: 256,
+      isForwarded: true
+    },
+    inviteLinkGroupTypeV2: 0,
+    linkPreviewMetadata: LinkPreviewMetadata {}
+  },
+  text: '⏳ Memproses audio...',
+  isMedia: false
+}
