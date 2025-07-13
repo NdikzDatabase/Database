@@ -1,0 +1,11 @@
+{
+  id: 'B74023E3A486CC3A97C9C03B85E7B9CD',
+  sender: '6285720014027@s.whatsapp.net',
+  fromMe: true,
+  isBot: false,
+  message: Message { conversation: 'woiii' },
+  type: 'conversation',
+  msg: 'woiii',
+  text: 'woiii',
+  isMedia: false
+}
