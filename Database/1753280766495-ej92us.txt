@@ -1,0 +1,51 @@
+{
+  id: '3EB0CF7B6C84BAD70A611A',
+  sender: '6281949653378@s.whatsapp.net',
+  fromMe: true,
+  isBot: false,
+  message: Message {
+    audioMessage: AudioMessage {
+      url: 'https://mmg.whatsapp.net/v/t62.7114-24/523801487_2135082976974998_4032318022572397014_n.enc?ccb=11-4&oh=01_Q5Aa2AF5_tO_k84aoY2_KX-nkJaqe_IE7dMAtY5dU69zqvrZiQ&oe=68A86CF9&_nc_sid=5e03e0&mms3=true',
+      mimetype: 'audio/mpeg',
+      fileSha256: [Uint8Array],
+      fileLength: [Long],
+      seconds: 236,
+      ptt: false,
+      mediaKey: [Uint8Array],
+      fileEncSha256: [Uint8Array],
+      directPath: '/v/t62.7114-24/523801487_2135082976974998_4032318022572397014_n.enc?ccb=11-4&oh=01_Q5Aa2AF5_tO_k84aoY2_KX-nkJaqe_IE7dMAtY5dU69zqvrZiQ&oe=68A86CF9&_nc_sid=5e03e0',
+      mediaKeyTimestamp: [Long]
+    }
+  },
+  type: 'audioMessage',
+  msg: AudioMessage {
+    url: 'https://mmg.whatsapp.net/v/t62.7114-24/523801487_2135082976974998_4032318022572397014_n.enc?ccb=11-4&oh=01_Q5Aa2AF5_tO_k84aoY2_KX-nkJaqe_IE7dMAtY5dU69zqvrZiQ&oe=68A86CF9&_nc_sid=5e03e0&mms3=true',
+    mimetype: 'audio/mpeg',
+    fileSha256: Uint8Array(32) [
+      222, 195,  40, 105, 118, 134,  49, 133,
+       47,  45,  24, 202,  74, 106, 255, 103,
+      149,  79, 136, 162, 208, 167, 245, 200,
+       66, 217, 193, 178, 115,  88,  28,  38
+    ],
+    fileLength: Long { low: 3784130, high: 0, unsigned: true },
+    seconds: 236,
+    ptt: false,
+    mediaKey: Uint8Array(32) [
+       27, 207,  69, 126, 209, 167, 245,   1,
+       26, 189,  40,  36, 247,  43, 241,  44,
+      230, 240, 145, 145,  82, 114, 101, 155,
+       34, 176, 221, 167,  11, 152, 110,  97
+    ],
+    fileEncSha256: Uint8Array(32) [
+      205,  10, 126,  19, 112, 242,  83,  96,
+      164,  91,  95,  54, 204,   4, 195, 244,
+      189,  75, 138, 129, 155, 108, 211, 108,
+       67, 134,  80, 199,  79, 199, 129, 223
+    ],
+    directPath: '/v/t62.7114-24/523801487_2135082976974998_4032318022572397014_n.enc?ccb=11-4&oh=01_Q5Aa2AF5_tO_k84aoY2_KX-nkJaqe_IE7dMAtY5dU69zqvrZiQ&oe=68A86CF9&_nc_sid=5e03e0',
+    mediaKeyTimestamp: Long { low: 1753280623, high: 0, unsigned: false }
+  },
+  text: '',
+  isMedia: true,
+  download: [AsyncFunction (anonymous)]
+}
