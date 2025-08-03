@@ -1,0 +1,11 @@
+*[ ERROR REPORT ]*
+
+*Perintah:* genshinstalk
+*User:* Yamonica 𝓟𝓔 (6285134481895@s.whatsapp.net)
+*Error:* 
+```SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6249:19)
+    at successSteps (node:internal/deps/undici/undici:6230:27)
+    at readAllBytes (node:internal/deps/undici/undici:5199:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)```
