@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ENCRYPTED</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        background: black;
+        color: red;
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        height: 100%;
+        user-select: none;
+        cursor: none;
+    }
+    .glitch {
+        font-size: 3em;
+        font-weight: bold;
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: flicker 0.2s infinite;
+        text-shadow: 2px 2px #ff0000, -2px -2px #ff0000;
+    }
+    @keyframes flicker {
+        0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {opacity: 1;}
+        20%, 24%, 55% {opacity: 0;}
+    }
+    #countdown {
+        font-size: 5em;
+        text-align: center;
+        margin-top: 100px;
+        animation: flicker 0.1s infinite;
+    }
+    #file-list {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        font-size: 1em;
+        height: 200px;
+        overflow: hidden;
+        color: #ff4444;
+    }
+    .locked-screen {
+        display: none;
+        background: black;
+        color: red;
+        font-size: 8em;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        justify-content: center;
+        align-items: center;
+        animation: lockedFlash 0.2s infinite;
+    }
+    @keyframes lockedFlash {
+        0% { color: red; background: black; }
+        50% { color: black; background: red; }
+        100% { color: red; background: black; }
+    }
+</style>
+</head>
+<body oncontextmenu="return false" onkeydown="return false">
+
+<div class="glitch">YOUR FILES HAVE BEEN ENCRYPTED!</div>
+<div id="countdown">5</div>
+
+<div id="file-list"></div>
+
+<div class="locked-screen" id="locked">LOCKED</div>
+
+<audio id="beep" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+<audio id="error" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+
+<script>
+let timeLeft = 5;
+const countdownEl = document.getElementById("countdown");
+const beep = document.getElementById("beep");
+const errorSound = document.getElementById("error");
+const fileList = document.getElementById("file-list");
+const lockedScreen = document.getElementById("locked");
+
+const files = [
+    "C:/User/Documents/passwords.txt",
+    "C:/User/Pictures/family.jpg",
+    "C:/User/Desktop/work.docx",
+    "D:/Games/savegame.dat",
+    "C:/Windows/system32/config.sys",
+    "E:/Projects/secret.zip"
+];
+
+function updateCountdown() {
+    beep.play();
+    countdownEl.textContent = timeLeft;
+    if (timeLeft <= 0) {
+        document.body.innerHTML = "";
+        document.body.appendChild(lockedScreen);
+        lockedScreen.style.display = "flex";
+        errorSound.play();
+    } else {
+        timeLeft--;
+        setTimeout(updateCountdown, 1000);
+    }
+}
+
+function simulateFiles() {
+    setInterval(() => {
+        const randomFile = files[Math.floor(Math.random() * files.length)];
+        const p = document.createElement("div");
+        p.textContent = "[ENCRYPTED] " + randomFile;
+        fileList.appendChild(p);
+        if (fileList.children.length > 10) {
+            fileList.removeChild(fileList.firstChild);
+        }
+    }, 200);
+}
+
+simulateFiles();
+updateCountdown();
+</script>
+</body>
+</html>
+> Jangan sebar apapun yang terjadi
