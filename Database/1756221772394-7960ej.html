@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Simple Payment</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: url('https://files.catbox.moe/8hqd3z.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+      padding: 50px 20px;
+      position: relative;
+    }
+
+    canvas#particles, canvas#snow {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .shine {
+      position: absolute;
+      top: -100%;
+      left: -100%;
+      width: 300%;
+      height: 300%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+      transform: rotate(45deg);
+      animation: shine 4s infinite linear;
+      z-index: 0;
+    }
+
+    @keyframes shine {
+      0% { transform: translate(-100%, -100%) rotate(45deg); }
+      100% { transform: translate(100%, 100%) rotate(45deg); }
+    }
+
+    #main-content {
+      display: none;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    }
+
+    .welcome-message {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+      z-index: 9999;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.2em;
+      animation: fadeInDown 1s ease-in-out;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #cbd5e1;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    .qr img {
+      width: 220px;
+      border-radius: 12px;
+      margin: 30px auto;
+      transition: transform 0.3s ease;
+    }
+
+    .qr:hover img { transform: scale(1.08); }
+
+    .collapsible-container {
+      max-width: 500px;
+      margin: 30px auto;
+      background-color: rgba(30, 41, 59, 0.8);
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .collapsible {
+      background: linear-gradient(135deg, #5b247a, #1bcedf);
+      color: #fff;
+      cursor: pointer;
+      padding: 14px 20px;
+      width: 100%;
+      font-size: 1.1em;
+      border-radius: 12px;
+      margin-top: 10px;
+      text-align: left;
+      position: relative;
+      border: none;
+      transition: background 0.3s ease;
+    }
+
+    .collapsible::after {
+      content: '▼';
+      position: absolute;
+      right: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .collapsible.active::after {
+      transform: rotate(-180deg);
+    }
+
+    .content {
+      max-height: 0;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      border-radius: 0 0 12px 12px;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0 20px;
+      margin-top: 5px;
+      color: #e0e0e0;
+      font-size: 0.95em;
+      border-left: 2px solid rgba(255, 255, 255, 0.15);
+      border-right: 2px solid rgba(255, 255, 255, 0.15);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .content.open {
+      padding: 15px 20px;
+      max-height: 300px;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 40px;
+      gap: 12px;
+    }
+
+    .btn-link, .btn-links {
+      padding: 14px 24px;
+      background: linear-gradient(45deg, #9073fa, #574596, #1fd1f9, #271e4a);
+      background-size: 200% 200%;
+      animation: gradientBtn 4s ease infinite;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    
+    .btn-pay {
+  padding: 14px 24px;
+  background: linear-gradient(45deg, #9073fa, #574596, #1fd1f9, #271e4a);
+  background-size: 200% 200%;
+  animation: gradientBtn 4s ease infinite;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: 0.3s;
+  margin-top: 20px;
+}
+
+    .btn-link:hover, .btn-links:hover { transform: scale(1.08); }
+
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes gradientBtn {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Fullscreen QR Overlay */
+    .fullscreen-qr {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9998;
+      transition: opacity 0.3s ease;
+    }
+
+    .fullscreen-qr img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .fullscreen-qr.hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="shine"></div>
+
+<div id="welcome-message" class="welcome-message">
+  <h1>Hai, Saya AlwaysAzrils</h1>
+  <p>Selamat Datang Di Website Payment.</p>
+  <button id="go-to-payment" class="btn-pay">Payment</button>
+</div>
+
+<div id="main-content">
+  <h1>Payment List</h1>
+  <p>Silakan Pilih Metode Pembayaran Di Bawah</p>
+
+  <div class="qr">
+    <img src="https://files.catbox.moe/o5u1g0.jpg" />
+  </div>
+
+  <p class="subtitle">Scan Qr Code Di Bawah Untuk Melakukan Pembayaran Via Qris</p>
+
+  <div class="collapsible-container">
+    <button class="collapsible" id="qris-btn">QRIS</button>
+    <div class="content">
+      <img src="https://files.catbox.moe/saa2rz.jpg" id="qris-image" style="width: 200px; border-radius: 12px; cursor: pointer;" />
+      <p>Gunakan aplikasi pembayaran untuk scan kode QR ini.</p>
+    </div>
+    
+    <button class="collapsible">DANA</button>
+    <div class="content">
+      <p><strong>DANA:</strong> 089527309641</p>
+      <p><strong>ATAS NAMA:</strong> Azril.N.M</p>
+    </div>
+
+    <button class="collapsible">GOPAY</button>
+    <div class="content">
+      <p><strong>GOPAY:</strong> 6289527309641</p>
+      <p><strong>ATAS NAMA:</strong> Azril.N.M</p>
+    </div>
+  </div>
+
+  <div class="btn-group">
+    <a href="https://wa.me/6285157457662" class="btn-link" target="_blank">WhatsApp</a>
+    <a href="https://www.instagram.com/azrillikethis?igsh=YmNvb2U3ajllaHlr" class="btn-link" target="_blank">Instagram</a>
+    <a href="index.html" class="btn-link">Kembali</a>
+  </div>
+</div>
+
+<!-- Fullscreen QR Overlay -->
+<div class="fullscreen-qr hidden" id="fullscreen-qr">
+  <img src="https://files.catbox.moe/saa2rz.jpg" alt="QRIS Fullscreen" />
+</div>
+
+<script>
+  document.getElementById('go-to-payment').addEventListener('click', function () {
+    document.getElementById('welcome-message').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
+  });
+
+  const collapsibles = document.querySelectorAll('.collapsible');
+  collapsibles.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('active');
+      const content = btn.nextElementSibling;
+      content.classList.toggle('open');
+    });
+  });
+
+  const qrisImage = document.getElementById('qris-image');
+  const qrOverlay = document.getElementById('fullscreen-qr');
+
+  qrisImage.addEventListener('click', () => {
+    qrOverlay.classList.remove('hidden');
+  });
+
+  qrOverlay.addEventListener('click', () => {
+    qrOverlay.classList.add('hidden');
+  });
+</script>
+
+</body>
+</html>
