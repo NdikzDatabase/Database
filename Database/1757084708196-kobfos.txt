@@ -1,0 +1,2632 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PteroStore - Premium Panel Hosting</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2721/2721297.png" type="image/png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Colors */
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --secondary: #8b5cf6;
+  --accent: #06b6d4;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --dark: #0f172a;
+  --dark-light: #1e293b;
+  --gray: #64748b;
+  --gray-light: #94a3b8;
+  --white: #ffffff;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --gradient-secondary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+  --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--gradient-dark);
+  color: var(--white);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Background Animation */
+.bg-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.floating-shapes {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(45deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+  animation: float 20s infinite ease-in-out;
+}
+
+.shape-1 {
+  width: 300px;
+  height: 300px;
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.shape-2 {
+  width: 200px;
+  height: 200px;
+  top: 60%;
+  right: 10%;
+  animation-delay: 5s;
+}
+
+.shape-3 {
+  width: 150px;
+  height: 150px;
+  bottom: 20%;
+  left: 20%;
+  animation-delay: 10s;
+}
+
+.shape-4 {
+  width: 250px;
+  height: 250px;
+  top: 30%;
+  right: 30%;
+  animation-delay: 15s;
+}
+
+.shape-5 {
+  width: 100px;
+  height: 100px;
+  bottom: 40%;
+  right: 50%;
+  animation-delay: 8s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translateY(-30px) rotate(90deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-60px) rotate(180deg);
+    opacity: 0.3;
+  }
+  75% {
+    transform: translateY(-30px) rotate(270deg);
+    opacity: 0.6;
+  }
+}
+
+/* Navigation */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--space-4) 0;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.brand-icon {
+  font-size: 1.5rem;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.brand-text {
+  font-size: 1.25rem;
+  font-weight: 800;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav-status {
+  display: flex;
+  align-items: center;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: var(--radius-lg);
+  font-size: 0.875rem;
+  color: var(--success);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--success);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+/* Main Container */
+.main-container {
+  margin-top: 80px;
+  min-height: calc(100vh - 80px);
+}
+
+/* Section Styles */
+.section {
+  display: none;
+  min-height: calc(100vh - 80px);
+  padding: var(--space-8) var(--space-6);
+}
+
+.section.active {
+  display: block;
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  margin-bottom: var(--space-16);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  margin-bottom: var(--space-6);
+  line-height: 1.1;
+}
+
+.gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: var(--gray-light);
+  margin-bottom: var(--space-8);
+  line-height: 1.6;
+}
+
+.hero-features {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-8);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-8);
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--gray-light);
+  font-size: 0.875rem;
+}
+
+.feature-item i {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+/* Toggle Buttons */
+.info-toggle-buttons {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-top: var(--space-8);
+}
+
+.toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  color: var(--white);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+.toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.toggle-btn.active {
+  background: var(--gradient-primary);
+  border-color: var(--primary);
+}
+
+.toggle-icon {
+  transition: transform 0.3s ease;
+}
+
+.toggle-btn.active .toggle-icon {
+  transform: rotate(180deg);
+}
+
+/* Panel Info Section */
+.panel-info-section {
+  max-width: 1200px;
+  margin: 0 auto var(--space-16);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+}
+
+.panel-info-section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.info-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.info-header h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: var(--space-3);
+}
+
+.info-header p {
+  font-size: 1.125rem;
+  color: var(--gray-light);
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-12);
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.info-card:hover::before {
+  transform: scaleX(1);
+}
+
+.info-card.highlight {
+  border-color: var(--primary);
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.2);
+}
+
+.info-card.highlight::before {
+  transform: scaleX(1);
+}
+
+.info-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto var(--space-4);
+  background: var(--gradient-primary);
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--white);
+}
+
+.info-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: var(--space-3);
+}
+
+.info-card p {
+  color: var(--gray-light);
+  margin-bottom: var(--space-4);
+  line-height: 1.6;
+}
+
+.info-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: var(--radius-lg);
+  color: var(--success);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Additional Features */
+.additional-features {
+  margin-bottom: var(--space-12);
+}
+
+.features-header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.features-header h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.features-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.feature-tag {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  color: var(--white);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.feature-tag:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.feature-tag i {
+  color: var(--primary);
+}
+
+/* Guarantee Section */
+.guarantee-section {
+  margin-bottom: var(--space-12);
+}
+
+.guarantee-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  display: flex;
+  gap: var(--space-6);
+  align-items: flex-start;
+}
+
+.guarantee-icon {
+  width: 80px;
+  height: 80px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.guarantee-content h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--space-3);
+}
+
+.guarantee-content p {
+  color: var(--gray-light);
+  margin-bottom: var(--space-4);
+}
+
+.guarantee-list {
+  list-style: none;
+  padding: 0;
+}
+
+.guarantee-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  color: var(--gray-light);
+}
+
+.guarantee-list li i {
+  color: var(--success);
+  font-size: 0.875rem;
+}
+
+/* Terms Section */
+.terms-section {
+  max-width: 1200px;
+  margin: 0 auto var(--space-16);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+}
+
+.terms-section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.terms-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.terms-header h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: var(--space-3);
+}
+
+.terms-header p {
+  font-size: 1.125rem;
+  color: var(--gray-light);
+}
+
+.terms-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: var(--space-6);
+}
+
+.terms-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  transition: all 0.3s ease;
+}
+
+.terms-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.terms-icon {
+  width: 50px;
+  height: 50px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: var(--white);
+  margin-bottom: var(--space-4);
+}
+
+.terms-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+}
+
+.terms-list {
+  list-style: none;
+  padding: 0;
+}
+
+.terms-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  color: var(--gray-light);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.terms-list li i {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.terms-list li i.fa-check {
+  color: var(--success);
+}
+
+.terms-list li i.fa-times {
+  color: var(--error);
+}
+
+.terms-list li i.fa-exclamation-triangle {
+  color: var(--warning);
+}
+
+.terms-agreement {
+  grid-column: 1 / -1;
+  margin-top: var(--space-6);
+}
+
+.agreement-box {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.agreement-box i {
+  font-size: 2rem;
+  color: var(--success);
+  flex-shrink: 0;
+}
+
+.agreement-text h4 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+  color: var(--success);
+}
+
+.agreement-text p {
+  color: var(--gray-light);
+  line-height: 1.6;
+}
+
+/* Packages Grid */
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-6);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.package-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.package-card::after {
+  content: "HEMAT!";
+  position: absolute;
+  top: 15px;
+  left: -30px;
+  background: var(--gradient-success);
+  color: var(--white);
+  padding: var(--space-1) var(--space-8);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transform: rotate(-45deg);
+  box-shadow: var(--shadow-md);
+}
+
+.package-card.popular::after {
+  content: "TERLARIS!";
+  background: var(--gradient-primary);
+}
+
+.package-card.popular {
+  border-color: var(--primary);
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.2);
+}
+
+.package-card.popular::before {
+  transform: scaleX(1);
+}
+
+.popular-badge {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  background: var(--gradient-primary);
+  color: var(--white);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-lg);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.package-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto var(--space-4);
+  background: var(--gradient-primary);
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--white);
+}
+
+.package-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.package-specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin: var(--space-6) 0;
+  padding: var(--space-4);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+}
+
+.spec-item {
+  text-align: center;
+}
+
+.spec-label {
+  font-size: 0.75rem;
+  color: var(--gray-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-1);
+}
+
+.spec-value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.package-price {
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: var(--space-4) 0;
+  position: relative;
+}
+
+.package-price::before {
+  content: "Mulai dari";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: var(--gray-light);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.price-currency {
+  font-size: 1rem;
+  color: var(--gray-light);
+}
+
+.select-btn {
+  width: 100%;
+  padding: var(--space-4) var(--space-6);
+  background: var(--gradient-primary);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: 1.125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.select-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.select-btn:hover::before {
+  left: 100%;
+}
+
+.select-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+}
+
+/* Hidden class for toggle functionality */
+.hidden {
+  display: none !important;
+}
+
+/* Form Styles */
+.form-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.back-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--white);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  font-size: 0.875rem;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.form-header h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: var(--space-3);
+}
+
+.form-header p {
+  font-size: 1.125rem;
+  color: var(--gray-light);
+}
+
+.order-content {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+.order-form {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+}
+
+.form-group {
+  margin-bottom: var(--space-6);
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+  color: var(--white);
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper i {
+  position: absolute;
+  left: var(--space-4);
+  color: var(--gray-light);
+  z-index: 1;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: var(--space-4) var(--space-4) var(--space-4) 3rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  color: var(--white);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.input-wrapper input::placeholder {
+  color: var(--gray);
+}
+
+.input-wrapper select {
+  width: 100%;
+  padding: var(--space-4) var(--space-4) var(--space-4) 3rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  color: var(--white);
+  font-size: 1rem;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+.input-wrapper select:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.input-wrapper select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.input-wrapper select option {
+  background: var(--dark-light);
+  color: var(--white);
+  padding: var(--space-2);
+}
+
+/* Custom dropdown arrow */
+.input-wrapper::after {
+  content: "\f078";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  right: var(--space-4);
+  color: var(--gray-light);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Hide default arrow for select */
+.input-wrapper select {
+  background-image: none;
+  padding-right: 3rem; /* Make space for custom arrow */
+}
+
+.toggle-password {
+  position: absolute;
+  right: var(--space-4);
+  background: none;
+  border: none;
+  color: var(--gray-light);
+  cursor: pointer;
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: var(--white);
+}
+
+.input-help {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: 0.875rem;
+  color: var(--gray-light);
+  line-height: 1.4;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: var(--space-4) var(--space-6);
+  background: var(--gradient-primary);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-8);
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Order Summary */
+.order-summary {
+  position: sticky;
+  top: 100px;
+}
+
+.summary-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+}
+
+.summary-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--space-6);
+  text-align: center;
+}
+
+.selected-package {
+  text-align: center;
+  margin-bottom: var(--space-6);
+  padding: var(--space-4);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+}
+
+.selected-package .package-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto var(--space-3);
+  font-size: 1.25rem;
+}
+
+.selected-package h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.selected-package .specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  font-size: 0.875rem;
+  color: var(--gray-light);
+}
+
+.summary-details {
+  margin-bottom: var(--space-6);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row.total {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--primary);
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  margin-top: var(--space-3);
+  padding-top: var(--space-4);
+}
+
+.free {
+  color: var(--success);
+  font-weight: 600;
+}
+
+.guarantee {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: var(--radius-lg);
+  font-size: 0.875rem;
+  color: var(--success);
+  text-align: center;
+  position: relative;
+}
+
+.guarantee::before {
+  content: "✓";
+  position: absolute;
+  left: var(--space-3);
+  font-weight: 900;
+  color: var(--success);
+}
+
+.guarantee span {
+  margin-left: var(--space-4);
+}
+
+/* Payment Section */
+.payment-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.payment-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.payment-header h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: var(--space-3);
+}
+
+.payment-header p {
+  font-size: 1.125rem;
+  color: var(--gray-light);
+}
+
+.payment-header p::after {
+  content: " ⏰ Bayar sekarang sebelum harga naik!";
+  color: var(--warning);
+  font-weight: 600;
+}
+
+.payment-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.qr-section {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  text-align: center;
+}
+
+.qr-container {
+  margin-bottom: var(--space-6);
+}
+
+.qr-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-8);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top: 3px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-spinner.large {
+  width: 60px;
+  height: 60px;
+  border-width: 4px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.qr-code {
+  padding: var(--space-4);
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  display: inline-block;
+  margin-bottom: var(--space-6);
+}
+
+.qr-code img {
+  width: 250px;
+  height: 250px;
+  border-radius: var(--radius-lg);
+}
+
+.payment-timer {
+  background: rgba(245, 158, 11, 0.15);
+  border: 2px solid rgba(245, 158, 11, 0.3);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  animation: urgentPulse 2s infinite;
+}
+
+@keyframes urgentPulse {
+  0%,
+  100% {
+    border-color: rgba(245, 158, 11, 0.3);
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+  }
+  50% {
+    border-color: rgba(245, 158, 11, 0.6);
+    box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+  }
+}
+
+.timer-icon {
+  color: var(--warning);
+  font-size: 1.25rem;
+}
+
+.timer-content {
+  flex: 1;
+}
+
+.timer-label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--warning);
+  margin-bottom: var(--space-1);
+}
+
+.timer-display {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--warning);
+  font-family: "Courier New", monospace;
+}
+
+.payment-info {
+  margin-bottom: var(--space-6);
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-3);
+}
+
+.info-item .label {
+  font-size: 0.875rem;
+  color: var(--gray-light);
+}
+
+.info-item .value {
+  font-weight: 600;
+  color: var(--white);
+}
+
+.info-item .value.amount {
+  color: var(--primary);
+  font-size: 1.125rem;
+}
+
+.copy-btn {
+  background: none;
+  border: none;
+  color: var(--gray-light);
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  transition: color 0.3s ease;
+}
+
+.copy-btn:hover {
+  color: var(--white);
+}
+
+.supported-apps {
+  margin-top: var(--space-6);
+}
+
+.supported-apps p {
+  font-size: 0.875rem;
+  color: var(--gray-light);
+  margin-bottom: var(--space-3);
+}
+
+.apps-list {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.app-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--gray-light);
+  transition: all 0.3s ease;
+}
+
+.app-icon:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--white);
+}
+
+/* Payment Status */
+.payment-status {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+}
+
+.status-card {
+  text-align: center;
+}
+
+.status-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--space-4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--white);
+}
+
+.status-icon.pending {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--warning);
+}
+
+.status-icon.success {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--success);
+}
+
+.status-icon.error {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--error);
+}
+
+.status-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.status-card p {
+  color: var(--gray-light);
+  margin-bottom: var(--space-6);
+}
+
+.payment-actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.status-check-btn, .cancel-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  min-width: 160px;
+  justify-content: center;
+}
+
+.status-check-btn {
+  background: var(--gradient-primary);
+  color: var(--white);
+  box-shadow: var(--shadow-md);
+}
+
+.status-check-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.status-check-btn:active {
+  transform: translateY(0);
+}
+
+.cancel-btn {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--error);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.cancel-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+  transform: translateY(-2px);
+}
+
+.cancel-btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .payment-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .status-check-btn, .cancel-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+.rotating {
+  animation: spin 2s linear infinite;
+}
+
+/* Success Section */
+.success-container {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.success-animation {
+  position: relative;
+  margin-bottom: var(--space-8);
+}
+
+.success-icon {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  background: var(--gradient-success);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: var(--white);
+  animation: successPop 0.6s ease-out;
+}
+
+.success-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  border: 2px solid var(--success);
+  border-radius: 50%;
+  animation: ripple 1.5s ease-out infinite;
+}
+
+@keyframes successPop {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+.success-container h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: var(--space-4);
+  color: var(--success);
+}
+
+.success-container p {
+  font-size: 1.125rem;
+  color: var(--gray-light);
+  margin-bottom: var(--space-8);
+}
+
+.panel-details {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  margin-bottom: var(--space-8);
+  text-align: left;
+}
+
+.panel-details h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+  text-align: center;
+  color: var(--success);
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-item .label {
+  color: var(--gray-light);
+}
+
+.detail-item .value {
+  font-weight: 600;
+  color: var(--white);
+  font-family: "Courier New", monospace;
+}
+
+.success-actions {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: var(--space-3) var(--space-6);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.primary-btn {
+  background: var(--gradient-primary);
+  color: var(--white);
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.secondary-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Error Section */
+.error-container {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.error-icon {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto var(--space-8);
+  background: rgba(239, 68, 68, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: var(--error);
+}
+
+.error-container h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: var(--space-4);
+  color: var(--error);
+}
+
+.error-container p {
+  font-size: 1.125rem;
+  color: var(--gray-light);
+  margin-bottom: var(--space-8);
+}
+
+.error-actions {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  top: 100px;
+  right: var(--space-6);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.toast {
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  backdrop-filter: blur(20px);
+}
+
+.toast.show {
+  transform: translateX(0);
+}
+
+.toast.success {
+  border-left: 4px solid var(--success);
+}
+
+.toast.error {
+  border-left: 4px solid var(--error);
+}
+
+.toast.warning {
+  border-left: 4px solid var(--warning);
+}
+
+.toast.info {
+  border-left: 4px solid var(--accent);
+}
+
+.toast-icon {
+  font-size: 1.25rem;
+}
+
+.toast.success .toast-icon {
+  color: var(--success);
+}
+
+.toast.error .toast-icon {
+  color: var(--error);
+}
+
+.toast.warning .toast-icon {
+  color: var(--warning);
+}
+
+.toast.info .toast-icon {
+  color: var(--accent);
+}
+
+.toast-content {
+  flex: 1;
+}
+
+.toast-title {
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+}
+
+.toast-message {
+  font-size: 0.875rem;
+  color: var(--gray-light);
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: var(--gray-light);
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  transition: color 0.3s ease;
+}
+
+.toast-close:hover {
+  color: var(--white);
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-overlay .loading-content {
+  text-align: center;
+}
+
+.loading-overlay .loading-content p {
+  margin-top: var(--space-4);
+  font-size: 1.125rem;
+  color: var(--gray-light);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .order-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .payment-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .packages-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .info-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .terms-content {
+    grid-template-columns: 1fr;
+  }
+
+  .guarantee-card {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    margin-top: 70px;
+  }
+
+  .section {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .nav-container {
+    padding: 0 var(--space-4);
+  }
+
+  .hero-features {
+    gap: var(--space-4);
+  }
+
+  .feature-item {
+    font-size: 0.75rem;
+  }
+
+  .info-toggle-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .toggle-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .packages-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .package-card {
+    padding: var(--space-6);
+  }
+
+  .success-actions,
+  .error-actions {
+    flex-direction: column;
+  }
+
+  .toast-container {
+    right: var(--space-4);
+    left: var(--space-4);
+  }
+
+  .toast {
+    min-width: auto;
+  }
+
+  .qr-code img {
+    width: 200px;
+    height: 200px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .terms-content {
+    grid-template-columns: 1fr;
+  }
+
+  .agreement-box {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .form-header h2 {
+    font-size: 2rem;
+  }
+
+  .payment-header h2 {
+    font-size: 2rem;
+  }
+
+  .success-container h2 {
+    font-size: 2rem;
+  }
+
+  .error-container h2 {
+    font-size: 2rem;
+  }
+
+  .info-header h2 {
+    font-size: 2rem;
+  }
+
+  .terms-header h2 {
+    font-size: 2rem;
+  }
+
+  .package-specs {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  .selected-package .specs {
+    grid-template-columns: 1fr;
+  }
+
+  .toggle-btn {
+    padding: var(--space-3) var(--space-4);
+    font-size: 0.875rem;
+  }
+}
+
+/* Admin Fee Styling */
+.admin-fee {
+  color: var(--warning) !important;
+  font-weight: 600;
+}
+
+.adjusted-amount {
+  color: var(--accent) !important;
+  font-weight: 600;
+}
+
+.pending-price {
+  color: var(--gray-light);
+  font-style: italic;
+}
+
+/* Trust indicators */
+.guarantee {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: var(--radius-lg);
+  font-size: 0.875rem;
+  color: var(--success);
+  text-align: center;
+  position: relative;
+}
+
+.guarantee::before {
+  content: "✓";
+  position: absolute;
+  left: var(--space-3);
+  font-weight: 900;
+  color: var(--success);
+}
+
+.guarantee span {
+  margin-left: var(--space-4);
+}
+
+        .sales-badges {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-6);
+            flex-wrap: wrap;
+            margin: var(--space-8) 0;
+            padding: var(--space-6);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .badge-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            color: var(--success);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .badge-item i {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-server brand-icon"></i>
+                <span class="brand-text">PteroStore</span>
+            </div>
+            <div class="nav-status">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>Online</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Package Selection Section -->
+        <section id="packageSection" class="section active">
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <h1 class="hero-title">
+                    Premium <span class="gradient-text">Panel Hosting</span>
+                </h1>
+                <p class="hero-subtitle">
+                    🎯 Dapatkan panel Pterodactyl berkualitas tinggi dengan setup otomatis dan pembayaran mudah via QRIS
+                    <br>
+                </p>
+                <div class="hero-features">
+                    <div class="feature-item">
+                        <i class="fas fa-bolt"></i>
+                        <span>Setup 5 Menit</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Garansi 15 Hari</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-headset"></i>
+                        <span>Support 24/7</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Harga Terjangkau</span>
+                    </div>
+                </div>
+
+                <!-- Sales badges -->
+                <div class="sales-badges">
+                    <div class="badge-item">
+                        <i class="fas fa-users"></i>
+                        <span>1000+ Pelanggan Puas</span>
+                    </div>
+                    <div class="badge-item">
+                        <i class="fas fa-star"></i>
+                        <span>Rating 4.9/5</span>
+                    </div>
+                    <div class="badge-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Uptime 99.9%</span>
+                    </div>
+                </div>
+
+                <!-- Toggle Buttons -->
+                <div class="info-toggle-buttons">
+                    <button class="toggle-btn" onclick="togglePanelInfo()">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Mengapa Pilih Kami?</span>
+                        <i class="fas fa-chevron-down toggle-icon" id="panelInfoIcon"></i>
+                    </button>
+                    <button class="toggle-btn" onclick="toggleTerms()">
+                        <i class="fas fa-file-contract"></i>
+                        <span>Ketentuan & Syarat</span>
+                        <i class="fas fa-chevron-down toggle-icon" id="termsIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Panel Information Section (Hidden by default) -->
+            <div class="panel-info-section hidden" id="panelInfoSection">
+                <div class="info-header">
+                    <h2>🔥 Mengapa Pilih Panel Kami?</h2>
+                    <p>Kualitas premium dengan jaminan terbaik untuk hosting Anda</p>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-card highlight">
+                        <div class="info-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3>Server Fresh & Terjaga</h3>
+                        <p>Server selalu dalam kondisi fresh dengan maintenance rutin dan monitoring 24/7</p>
+                        <div class="info-badge">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Guaranteed Fresh</span>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3>Anti Colong Script</h3>
+                        <p>Sistem keamanan berlapis dengan proteksi anti-theft dan enkripsi tingkat enterprise</p>
+                        <div class="info-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>100% Secure</span>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h3>Garansi Aktif 15 Hari</h3>
+                        <p>Jaminan panel aktif selama 15 hari penuh atau uang kembali 100%</p>
+                        <div class="info-badge">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>Money Back</span>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>Performa Maksimal</h3>
+                        <p>Hardware premium dengan SSD NVMe dan RAM DDR4 untuk performa terbaik</p>
+                        <div class="info-badge">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>High Speed</span>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>Setup Otomatis</h3>
+                        <p>Panel langsung siap pakai dalam 5 menit setelah pembayaran berhasil</p>
+                        <div class="info-badge">
+                            <i class="fas fa-clock"></i>
+                            <span>5 Minutes</span>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Support Premium</h3>
+                        <p>Tim support berpengalaman siap membantu 24/7 via WhatsApp dan Telegram</p>
+                        <div class="info-badge">
+                            <i class="fas fa-comments"></i>
+                            <span>24/7 Support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terms & Conditions Section (Hidden by default) -->
+            <div class="terms-section hidden" id="termsSection">
+                <div class="terms-header">
+                    <h2>📋 Ketentuan & Syarat Layanan</h2>
+                    <p>Harap baca dengan teliti sebelum melakukan pemesanan</p>
+                </div>
+
+                <div class="terms-content">
+                    <div class="terms-card">
+                        <div class="terms-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h3>Ketentuan Pemesanan</h3>
+                        <ul class="terms-list">
+                            <li><i class="fas fa-check"></i> Pembayaran harus dilakukan dalam waktu 5 menit setelah QR Code dibuat</li>
+                            <li><i class="fas fa-check"></i> Username dan password yang sudah dibuat tidak dapat diubah</li>
+                            <li><i class="fas fa-check"></i> Satu email hanya dapat digunakan untuk satu akun panel</li>
+                            <li><i class="fas fa-check"></i> Panel akan otomatis dibuat setelah pembayaran terverifikasi</li>
+                            <li><i class="fas fa-check"></i> Proses pembuatan panel maksimal 10 menit setelah pembayaran</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-card">
+                        <div class="terms-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Kebijakan Penggunaan</h3>
+                        <ul class="terms-list">
+                            <li><i class="fas fa-times"></i> Dilarang menggunakan panel untuk aktivitas ilegal</li>
+                            <li><i class="fas fa-times"></i> Dilarang melakukan spam atau flooding</li>
+                            <li><i class="fas fa-times"></i> Dilarang menyalahgunakan resources server</li>
+                            <li><i class="fas fa-times"></i> Dilarang berbagi akses panel dengan pihak ketiga</li>
+                            <li><i class="fas fa-check"></i> Wajib menjaga kerahasiaan username dan password</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-card">
+                        <div class="terms-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h3>Kebijakan Refund</h3>
+                        <ul class="terms-list">
+                            <li><i class="fas fa-check"></i> Refund 100% jika panel tidak dapat dibuat dalam 24 jam</li>
+                            <li><i class="fas fa-check"></i> Refund 50% jika panel bermasalah dalam 7 hari pertama</li>
+                            <li><i class="fas fa-check"></i> Tidak ada refund setelah 7 hari pembelian</li>
+                            <li><i class="fas fa-check"></i> Refund diproses maksimal 3x24 jam setelah pengajuan</li>
+                            <li><i class="fas fa-check"></i> Refund dikembalikan ke metode pembayaran yang sama</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-card">
+                        <div class="terms-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Layanan Support</h3>
+                        <ul class="terms-list">
+                            <li><i class="fas fa-check"></i> Support tersedia 24/7 via WhatsApp dan Telegram</li>
+                            <li><i class="fas fa-check"></i> Response time maksimal 5 menit pada jam kerja</li>
+                            <li><i class="fas fa-check"></i> Response time maksimal 30 menit di luar jam kerja</li>
+                            <li><i class="fas fa-check"></i> Bantuan teknis gratis selama masa aktif panel</li>
+                            <li><i class="fas fa-check"></i> Tutorial dan dokumentasi tersedia di website</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-card">
+                        <div class="terms-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3>Peringatan & Disclaimer</h3>
+                        <ul class="terms-list">
+                            <li><i class="fas fa-exclamation-triangle"></i> Backup data secara berkala untuk keamanan</li>
+                            <li><i class="fas fa-exclamation-triangle"></i> Kami tidak bertanggung jawab atas kehilangan data akibat kelalaian user</li>
+                            <li><i class="fas fa-exclamation-triangle"></i> Panel dapat disuspend jika melanggar ketentuan</li>
+                            <li><i class="fas fa-exclamation-triangle"></i> Maintenance server dapat dilakukan tanpa pemberitahuan</li>
+                            <li><i class="fas fa-check"></i> Semua data akan dihapus setelah masa aktif berakhir</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-agreement">
+                        <div class="agreement-box">
+                            <i class="fas fa-handshake"></i>
+                            <div class="agreement-text">
+                                <h4>Persetujuan</h4>
+                                <p>Dengan melakukan pemesanan, Anda menyetujui semua ketentuan dan syarat yang berlaku. Jika ada pertanyaan, silakan hubungi tim support kami.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="packages-grid" id="packagesGrid">
+                <!-- Packages will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Order Form Section -->
+        <section id="orderSection" class="section">
+            <div class="form-container">
+                <div class="form-header">
+                    <button class="back-btn" onclick="showSection('packageSection')">
+                        <i class="fas fa-arrow-left"></i>
+                        Kembali
+                    </button>
+                    <h2>Detail Pemesanan</h2>
+                    <p>Lengkapi data untuk membuat panel Anda</p>
+                </div>
+
+                <div class="order-content">
+                    <div class="order-form">
+                        <form id="orderForm">
+                            <div class="form-group">
+                                <label for="username">Username Panel</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="username" name="username" placeholder="Masukkan username" required>
+                                </div>
+                                <small class="input-help">Username akan digunakan untuk login ke panel</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Password Panel</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" id="password" name="password" placeholder="Masukkan password" required>
+                                    <button type="button" class="toggle-password" onclick="togglePassword()">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <small class="input-help">Minimal 6 karakter, gunakan kombinasi huruf dan angka</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="serverName">Nama Server</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-server"></i>
+                                    <input type="text" id="serverName" name="serverName" placeholder="Masukkan nama server" required>
+                                </div>
+                                <small class="input-help">Nama server yang akan ditampilkan di panel</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="location">Lokasi Server</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <select id="location" name="location" required>
+                                        <option value="">Pilih Lokasi Server</option>
+                                    </select>
+                                </div>
+                                <small class="input-help">Pilih lokasi server terdekat untuk performa optimal</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="node">Node Server</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-server"></i>
+                                    <select id="node" name="node" required>
+                                        <option value="">Pilih Node Server</option>
+                                    </select>
+                                </div>
+                                <small class="input-help">Pilih node server yang tersedia</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nest">Nest (Jenis Server)</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-layer-group"></i>
+                                    <select id="nest" name="nest" required>
+                                        <option value="">Pilih Jenis Server</option>
+                                    </select>
+                                </div>
+                                <small class="input-help">Pilih jenis server yang sesuai kebutuhan</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="egg">Egg (Template Server)</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-egg"></i>
+                                    <select id="egg" name="egg" required>
+                                        <option value="">Pilih Template Server</option>
+                                    </select>
+                                </div>
+                                <small class="input-help">Pilih template server yang sesuai</small>
+                            </div>
+
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-credit-card"></i>
+                                Lanjut ke Pembayaran
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="order-summary">
+                        <div class="summary-card">
+                            <h3>Ringkasan Pesanan</h3>
+                            <div class="selected-package" id="selectedPackage">
+                                <!-- Selected package info -->
+                            </div>
+                            <div class="summary-details">
+                                <div class="detail-row">
+                                    <span>Harga Paket</span>
+                                    <span id="packagePrice">Rp 0</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Setup Fee</span>
+                                    <span class="free">Gratis</span>
+                                </div>
+                                <div class="detail-row total">
+                                    <span>Total Pembayaran</span>
+                                    <span id="totalPrice">Rp 0</span>
+                                </div>
+                            </div>
+                            <div class="guarantee">
+                                <i class="fas fa-shield-check"></i>
+                                <span>Garansi 100% atau uang kembali</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Payment Section -->
+        <section id="paymentSection" class="section">
+            <div class="payment-container">
+                <div class="payment-header">
+                    <h2>Pembayaran QRIS</h2>
+                    <p>Scan QR Code dengan aplikasi e-wallet atau mobile banking Anda</p>
+                </div>
+
+                <div class="payment-content">
+                    <div class="qr-section">
+                        <div class="qr-container" id="qrContainer">
+                            <div class="qr-loading" id="qrLoading">
+                                <div class="loading-spinner"></div>
+                                <p>Membuat QR Code...</p>
+                            </div>
+                            <div class="qr-code" id="qrCode" style="display: none;">
+                                <img id="qrImage" alt="QR Code Pembayaran">
+                            </div>
+                        </div>
+                        
+                        <div class="payment-timer" id="paymentTimer" style="display: none;">
+                            <div class="timer-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="timer-content">
+                                <span class="timer-label">Sisa Waktu Pembayaran</span>
+                                <div class="timer-display">
+                                    <span id="minutes">05</span>:<span id="seconds">00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="payment-info">
+                            <div class="info-item">
+                                <span class="label">ID Transaksi:</span>
+                                <span class="value" id="transactionId">-</span>
+                                <button class="copy-btn" onclick="copyTransactionId()">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Jumlah Pembayaran:</span>
+                                <span class="value amount" id="paymentAmount">Rp 0</span>
+                            </div>
+                        </div>
+
+                        <div class="supported-apps">
+                            <p>Didukung oleh:</p>
+                            <div class="apps-list">
+                                <div class="app-icon"><i class="fab fa-google-pay"></i></div>
+                                <div class="app-icon"><span>OVO</span></div>
+                                <div class="app-icon"><span>DANA</span></div>
+                                <div class="app-icon"><span>ShopeePay</span></div>
+                                <div class="app-icon"><i class="fas fa-university"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-status" id="paymentStatus">
+                        <div class="status-card">
+                            <div class="status-icon pending" id="statusIcon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h3 id="statusTitle">Menunggu Pembayaran</h3>
+                            <p id="statusMessage">Silakan lakukan pembayaran sesuai nominal yang tertera</p>
+                            
+                            <div class="payment-actions">
+                                <button class="status-check-btn" onclick="checkPaymentStatus()">
+                                    <i class="fas fa-sync-alt"></i>
+                                    Cek Status Pembayaran
+                                </button>
+                                <button class="cancel-btn" onclick="cancelPayment()">
+                                    <i class="fas fa-times"></i>
+                                    Batalkan Pembayaran
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Section -->
+        <section id="successSection" class="section">
+            <div class="success-container">
+                <div class="success-animation">
+                    <div class="success-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="success-ripple"></div>
+                </div>
+                
+                <h2>Panel Berhasil Dibuat!</h2>
+                <p>Selamat! Panel Pterodactyl Anda telah berhasil dibuat dan siap digunakan.</p>
+                
+                <div class="panel-details" id="panelDetails">
+                    <!-- Panel login details will be shown here -->
+                </div>
+                
+                <div class="success-actions">
+                    <button class="primary-btn" onclick="openPanel()">
+                        <i class="fas fa-external-link-alt"></i>
+                        Buka Panel
+                    </button>
+                    <button class="secondary-btn" onclick="newOrder()">
+                        <i class="fas fa-plus"></i>
+                        Buat Panel Baru
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Error Section -->
+        <section id="errorSection" class="section">
+            <div class="error-container">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h2>Pembayaran Gagal</h2>
+                <p id="errorMessage">Waktu pembayaran telah habis atau terjadi kesalahan.</p>
+                
+                <div class="error-actions">
+                    <button class="primary-btn" onclick="retryPayment()">
+                        <i class="fas fa-redo"></i>
+                        Coba Lagi
+                    </button>
+                    <button class="secondary-btn" onclick="newOrder()">
+                        <i class="fas fa-home"></i>
+                        Kembali ke Beranda
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner large"></div>
+            <p>Memproses pesanan Anda...</p>
+        </div>
+    </div>
+
+    <script>
+    
+// Global variables
+let selectedPackage = null
+let currentOrder = null
+let paymentTimer = null
+let statusCheckInterval = null
+let availableResources = {
+  locations: [],
+  nodes: [],
+  nests: [],
+  eggs: []
+}
+
+// Panel packages configuration
+const panelPackages = {
+        "1gb": {
+          ram: "1024",
+          disk: "2048",
+          cpu: "50",
+          price: 3500,
