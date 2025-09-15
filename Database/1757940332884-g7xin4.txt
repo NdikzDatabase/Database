@@ -1,0 +1,69 @@
+case 'iqc': {
+      try {
+        // Pastikan ada teks yang dikirim
+        if (!text) {
+          m.reply('Format salah! Gunakan: .iqc jam|batre|pesan\nContoh: .iqc 18:00|40|hai hai');
+          break;
+        }
+
+        // Pisahkan parameter
+        const parts = text.split('|');
+        if (parts.length < 3) {
+          m.reply('Format salah! Gunakan:\n.iqc jam|batre|pesan\nContoh:\n.iqc 18:00|40|hai hai');
+          break;
+        }
+
+        const [time, battery, ...messageParts] = parts;
+        const message = messageParts.join('|').trim();
+
+        // Validasi input
+        if (!time || !battery || !message) {
+          m.reply('Format tidak lengkap! Pastikan mengisi jam, batre, dan pesan');
+          break;
+        }
+
+        // Kirim indikator proses
+        await conn.sendMessage(m.chat, {
+          react: {
+            text: '⏳',
+            key: m.key
+          }
+        });
+
+        // Encode parameter URL
+        const encodedTime = encodeURIComponent(time);
+        const encodedMessage = encodeURIComponent(message);
+        const url = `https://brat.siputzx.my.id/iphone-quoted?time=${encodedTime}&batteryPercentage=${battery}&carrierName=INDOSAT&messageText=${encodedMessage}&emojiStyle=apple`;
+
+        // Fetch gambar
+        const axios = require('axios');
+        const response = await axios.get(url, {
+          responseType: 'arraybuffer'
+        });
+
+        if (!response.data) {
+          throw new Error('Gagal mendapatkan gambar dari server');
+        }
+
+        // Kirim hasil
+        await conn.sendMessage(m.chat, {
+          image: Buffer.from(response.data),
+          caption: '✅ Pesan iPhone quote berhasil dibuat'
+        }, {
+          quoted: m
+        });
+
+        // Tandai selesai
+        await conn.sendMessage(m.chat, {
+          react: {
+            text: '✅',
+            key: m.key
+          }
+        });
+
+      } catch (error) {
+        console.error('Error di iqc:', error);
+        m.chat(`❌ Error: ${error.message || 'Terjadi kesalahan saat memproses'}`);
+      }
+      break;
+    }
