@@ -1,6 +1,17 @@
 {
   "files": [
     {
+      "name": "DZSOUND.mp3",
+      "originalName": "DZSOUND.mp3",
+      "path": "uploads/DZSOUND.mp3",
+      "type": "audio/mpeg",
+      "uploadTime": "2025-10-18T04:16:42.452Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/d6e2416eedf10589846866442f65d4c46139b099",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/DZSOUND.mp3",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/DZSOUND.mp3",
+      "size": 741099
+    },
+    {
       "name": "galau.mp3",
       "originalName": "galau.mp3",
       "path": "uploads/galau.mp3",
@@ -199,5 +210,5 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2025-10-18T03:55:43.948Z"
+  "lastUpdated": "2025-10-18T04:16:42.452Z"
 }
