@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsApp Bug Sender</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #25D366;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #25D366;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #128C7E;
+    }
+    #result {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(0,0,0,.1);
+      border-radius: 50%;
+      border-top-color: #25D366;
+      animation: spin 1s ease-in-out infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>WhatsApp Bug Sender</h1>
+    
+    <div class="form-group">
+      <label for="target">Target Number (with country code):</label>
+      <input type="text" id="target" placeholder="6281234567890" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="bugType">Bug Type:</label>
+      <select id="bugType">
+        <option value="delay">Delay Bug (API BUG)</option>
+        <option value="fc">Foreclosure Bug (Apifc)</option>
+        <option value="android">Android Freeze (Vior & Case)</option>
+        <option value="nested">Nested Structure (Yukina X Raldz)</option>
+      </select>
+    </div>
+    
+    <div class="form-group" id="durationGroup" style="display:none;">
+      <label for="duration">Duration (hours):</label>
+      <input type="number" id="duration" min="1" max="24" value="1">
+    </div>
+    
+    <button id="sendButton" onclick="sendBug()">Send Bug</button>
+    
+    <div id="result"></div>
+  </div>
+
+  <script>
+    // DOM elements
+    const targetInput = document.getElementById('target');
+    const bugTypeSelect = document.getElementById('bugType');
+    const durationGroup = document.getElementById('durationGroup');
+    const durationInput = document.getElementById('duration');
+    const sendButton = document.getElementById('sendButton');
+    const resultDiv = document.getElementById('result');
+
+    // Show/hide duration field based on bug type
+    bugTypeSelect.addEventListener('change', function() {
+      durationGroup.style.display = this.value === 'delay' ? 'block' : 'none';
+    });
+
+    // Main function to send bug
+    async function sendBug() {
+      const target = targetInput.value.trim();
+      const bugType = bugTypeSelect.value;
+      const duration = durationInput.value;
+
+      // Validate input
+      if (!target) {
+        showResult('Please enter a target number', 'error');
+        return;
+      }
+
+      if (bugType === 'delay' && (!duration || duration < 1)) {
+        showResult('Please enter a valid duration (1-24 hours)', 'error');
+        return;
+      }
+
+      // Disable button and show loading
+      sendButton.disabled = true;
+      const originalText = sendButton.innerHTML;
+      sendButton.innerHTML = '<span class="loading"></span> Sending...';
+
+      try {
+        let success = false;
+        let message = '';
+
+        switch (bugType) {
+          case 'delay':
+            success = await sendDelayBug(target, duration);
+            message = success ? 
+              `✅ Successfully sent Delay Bug to ${target} for ${duration} hours` : 
+              `❌ Failed to send Delay Bug`;
+            break;
+            
+          case 'fc':
+            success = await sendForeclosureBug(target);
+            message = success ? 
+              `✅ Successfully sent Foreclosure Bug to ${target}` : 
+              `❌ Failed to send Foreclosure Bug`;
+            break;
+            
+          case 'android':
+            success = await sendAndroidFreeze(target);
+            message = success ? 
+              `✅ Successfully sent Android Freeze to ${target}` : 
+              `❌ Failed to send Android Freeze`;
+            break;
+            
+          case 'nested':
+            success = await sendNestedStructureBug(target);
+            message = success ? 
+              `✅ Successfully sent Nested Structure Bug to ${target}` : 
+              `❌ Failed to send Nested Structure Bug`;
+            break;
+        }
+
+        showResult(message, success ? 'success' : 'error');
+      } catch (error) {
+        showResult(`❌ Error: ${error.message}`, 'error');
+      } finally {
+        // Restore button
+        sendButton.disabled = false;
+        sendButton.innerHTML = originalText;
+      }
+    }
+
+    // API Bug (Delay) implementation
+    async function sendDelayBug(target, durationHours) {
+      const totalDurationMs = durationHours * 60 * 60 * 1000;
+      const startTime = Date.now();
+      let count = 0;
+
+      return new Promise((resolve) => {
+        const sendNext = async () => {
+          if (Date.now() - startTime >= totalDurationMs) {
+            console.log(`Stopped after sending ${count} messages`);
+            resolve(true);
+            return;
+          }
+
+          try {
+            if (count < 400) {
+              // Simulate API call
+              await new Promise(resolve => setTimeout(resolve, 100));
+              console.log(`API BUG (DELAY) ${count}/400 to ${target}`);
+              count++;
+              setTimeout(sendNext, 100);
+            } else {
+              console.log(`✅ Success Sending 400 Messages to ${target}`);
+              count = 0;
+              console.log("➡️ Next 400 Messages");
+              setTimeout(sendNext, 100);
+            }
+          } catch (error) {
+            console.error(`❌ Error while sending: ${error.message}`);
+            setTimeout(sendNext, 100);
+          }
+        };
+
+        sendNext();
+      });
+    }
+
+    // Foreclosure Bug implementation
+    async function sendForeclosureBug(target) {
+      // Simulate API call with Apifc.json structure
+      try {
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Simulate successful response
+        const response = {
+          status: true,
+          criador: "Erlangga Api",
+          resultado: {
+            type: "md",
+            ws: {
+              _events: { "CB:ib,,dirty": ["Array"] },
+              _eventsCount: 800000,
+              url: "wss://web.whatsapp.com/ws/chat",
+              config: {
+                waWebSocketUrl: "wss://web.whatsapp.com/ws/chat",
+                sockCectTimeoutMs: 20000,
+                mobile: true
+              }
+            }
+          }
+        };
+        
+        return response.status;
+      } catch (error) {
+        console.error("Foreclosure error:", error);
+        return false;
+      }
+    }
+
+    // Android Freeze implementation
+    async function sendAndroidFreeze(target) {
+      try {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Simulate successful response
+        const response = "✅ S U C C E S";
+        return response.includes("✅ S U C C E S");
+      } catch (error) {
+        console.error("Android freeze error:", error);
+        return false;
+      }
+    }
+
+    // Nested Structure Bug implementation
+    async function sendNestedStructureBug(target) {
+      try {
+        // Simulate API call with Yukina X Raldz structure
+        await new Promise(resolve => setTimeout(resolve, 1800));
+        
+        // Simulate successful response
+        const response = {
+          status: true,
+          criador: "Yukina",
+          resultado: {
+            type: "md",
+            ws: {
+              _events: { "CB:ib,,dirty": ["Array"] },
+              _eventsCount: 80000,
+              url: "wss://web.whatsapp.com/ws/chat",
+              config: {
+                waWebSocketUrl: "wss://web.whatsapp.com/ws/chat",
+                sockCectTimeoutMs: 2000,
+                mobile: true
+              }
+            }
+          }
+        };
+        
+        return response.status;
+      } catch (error) {
+        console.error("Nested structure error:", error);
+        return false;
+      }
+    }
+
+    // Helper function to show results
+    function showResult(message, type) {
+      resultDiv.textContent = message;
+      resultDiv.className = type;
+    }
+  </script>
+</body>
+</html>
