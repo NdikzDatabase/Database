@@ -1,6 +1,17 @@
 {
   "files": [
     {
+      "name": "text-1762188582826.txt",
+      "originalName": "text-1762188582826.txt",
+      "path": "uploads/text-1762188582826.txt",
+      "type": "text/plain",
+      "uploadTime": "2025-11-03T16:49:44.865Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/d16fdb360b2f499831886d6d533e5471ca3116ab",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/text-1762188582826.txt",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/text-1762188582826.txt",
+      "size": 6423
+    },
+    {
       "name": "undefined.jpg",
       "originalName": "undefined.jpg",
       "path": "uploads/undefined.jpg",
@@ -298,5 +309,5 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2025-11-03T03:48:51.468Z"
+  "lastUpdated": "2025-11-03T16:49:44.865Z"
 }
