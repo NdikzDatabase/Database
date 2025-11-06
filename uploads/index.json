@@ -1,6 +1,17 @@
 {
   "files": [
     {
+      "name": "TEKNIK SOUND.mp3",
+      "originalName": "TEKNIK SOUND.mp3",
+      "path": "uploads/TEKNIK SOUND.mp3",
+      "type": "audio/mpeg",
+      "uploadTime": "2025-11-06T04:14:26.209Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/a84a82386dfb4d232432f5310c6c685607cb1568",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/TEKNIK SOUND.mp3",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/TEKNIK SOUND.mp3",
+      "size": 774984
+    },
+    {
       "name": "text-1762188582826.txt",
       "originalName": "text-1762188582826.txt",
       "path": "uploads/text-1762188582826.txt",
@@ -309,5 +320,5 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2025-11-03T16:49:44.865Z"
+  "lastUpdated": "2025-11-06T04:14:26.209Z"
 }
