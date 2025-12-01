@@ -1,6 +1,17 @@
 {
   "files": [
     {
+      "name": "ndikz.egg.json",
+      "originalName": "egg-ndikz-egg.json",
+      "path": "uploads/ndikz.egg.json",
+      "type": "application/json",
+      "uploadTime": "2025-12-01T06:36:19.098Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/c16ed299d6a5c5e30d62afb85d8c6f7c3aa3a056",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/ndikz.egg.json",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/ndikz.egg.json",
+      "size": 5064
+    },
+    {
       "name": "579e727e7235e75d860002afc0e15e65.jpg",
       "originalName": "579e727e7235e75d860002afc0e15e65.jpg",
       "path": "uploads/579e727e7235e75d860002afc0e15e65.jpg",
@@ -353,5 +364,5 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2025-11-30T11:39:07.123Z"
+  "lastUpdated": "2025-12-01T06:36:19.098Z"
 }
