@@ -1,0 +1,58 @@
+case 'tourl3': {
+    let q = m.quoted ? m.quoted : m;
+    let mime = q.mimetype || q?.msg?.mimetype || '';
+
+    let fileBuffer, fileName;
+
+    if (q?.fileSha256 || q?.isMedia || mime) {
+        await m.reply('📥 Mengunduh file...');
+
+        try {
+            fileBuffer = await q.download?.() || await naze.downloadMediaMessage?.(q);
+        } catch (e) {
+            return m.reply('❌ Gagal mendownload media.');
+        }
+
+        // Gunakan "datenow.jpg" jika mime adalah gambar
+        if (/image\/(jpeg|png|jpg|webp)/.test(mime)) {
+            fileName = 'datenow.jpg';
+        } else {
+            const ext = mime ? mime.split('/')[1].split(';')[0] : 'bin';
+            fileName = `upload-${Date.now()}.${ext}`;
+        }
+    } else if (q?.text && q.text !== m.text) {
+        fileBuffer = Buffer.from(q.text, 'utf-8');
+        fileName = `text-${Date.now()}.txt`;
+    } else {
+        return m.reply('📎 Balas media (gambar, dokumen, dsb) atau teks. Jangan hanya ketik *tourl* tanpa media.');
+    }
+
+    const tmpDir = path.resolve('./tmp');
+    if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
+
+    const filepath = path.join(tmpDir, fileName);
+    fs.writeFileSync(filepath, fileBuffer);
+
+    try {
+        const form = new FormData();
+        form.append('file', fs.createReadStream(filepath));
+
+        const res = await axios.post('https://upload-github.vercel.app/api/upload', form, {
+            headers: form.getHeaders(),
+        });
+
+        const { url, raw_url } = res.data;
+
+        if (!url || !raw_url) throw new Error('❌ Gagal mendapatkan URL dari server.');
+
+        await m.reply(`✅ *Upload Berhasil!*
+📁 *Nama:* ${fileName}
+🔗 *URL:* ${raw_url}
+🌐 *Host:* githubusercontent.com`);
+    } catch (err) {
+        await m.reply(`❌ Gagal upload:\n${err.message}`);
+    } finally {
+        if (fs.existsSync(filepath)) fs.unlinkSync(filepath);
+    }
+}
+break
