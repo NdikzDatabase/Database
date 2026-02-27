@@ -1,6 +1,22 @@
 {
   "files": [
     {
+      "id": "mm51iljgq4ai4dvwl2s",
+      "name": "Screenshot_20260227_222037.jpg",
+      "originalName": "Screenshot_20260227_222037.jpg",
+      "path": "uploads/images/Screenshot_20260227_222037.jpg",
+      "type": "image/jpeg",
+      "category": "Image",
+      "extension": "jpg",
+      "uploadTime": "2026-02-27T15:21:39.725Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/f3384aa7239debeb14fdf3496ab9fd9a3104d805",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/images/Screenshot_20260227_222037.jpg",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/images/Screenshot_20260227_222037.jpg",
+      "size": 364827,
+      "sizeReadable": "356.28 KB",
+      "downloads": 0
+    },
+    {
       "id": "mm2vbto8avteehs4tbf",
       "name": "Do_ura_L_quida_Salpicada_De_Rosa_PNG___L_quido__Gotas_De__gua__Morango_Imagem_PNG_e_PSD_Para_Download_Gratuito.jpg",
       "originalName": "Doçura Líquida Salpicada De Rosa PNG , Líquido, Gotas De água, Morango Imagem PNG e PSD Para Download Gratuito.jpg",
@@ -644,13 +660,13 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2026-02-26T02:52:53.624Z",
+  "lastUpdated": "2026-02-27T15:21:39.725Z",
   "stats": {
-    "totalFiles": 58,
-    "totalSize": 14360238,
-    "totalSizeReadable": "13.69 MB",
+    "totalFiles": 59,
+    "totalSize": 14725065,
+    "totalSizeReadable": "14.04 MB",
     "byType": {
-      "Image": 1,
+      "Image": 2,
       "Other": 57
     }
   }
