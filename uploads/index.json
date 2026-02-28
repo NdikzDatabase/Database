@@ -1,6 +1,22 @@
 {
   "files": [
     {
+      "id": "mm62yxmkd0ue4a7hnha",
+      "name": "Screenshot_20260228_154906.jpg",
+      "originalName": "Screenshot_20260228_154906.jpg",
+      "path": "uploads/images/Screenshot_20260228_154906.jpg",
+      "type": "image/jpeg",
+      "category": "Image",
+      "extension": "jpg",
+      "uploadTime": "2026-02-28T08:50:07.676Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/08f49c08153fa5fc3e76a8e00c5b28deefdd4d98",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/images/Screenshot_20260228_154906.jpg",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/images/Screenshot_20260228_154906.jpg",
+      "size": 470085,
+      "sizeReadable": "459.07 KB",
+      "downloads": 0
+    },
+    {
       "id": "mm51iljgq4ai4dvwl2s",
       "name": "Screenshot_20260227_222037.jpg",
       "originalName": "Screenshot_20260227_222037.jpg",
@@ -660,13 +676,13 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2026-02-27T15:21:39.725Z",
+  "lastUpdated": "2026-02-28T08:50:07.676Z",
   "stats": {
-    "totalFiles": 59,
-    "totalSize": 14725065,
-    "totalSizeReadable": "14.04 MB",
+    "totalFiles": 60,
+    "totalSize": 15195150,
+    "totalSizeReadable": "14.49 MB",
     "byType": {
-      "Image": 2,
+      "Image": 3,
       "Other": 57
     }
   }
