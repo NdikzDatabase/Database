@@ -1,6 +1,22 @@
 {
   "files": [
     {
+      "id": "mmihd34v2k85h22dwo9",
+      "name": "ilustrasi_keemasan_emas_lencana_berhias_golongan_.jpg",
+      "originalName": "ilustrasi,keemasan,emas,lencana,berhias,golongan….jpg",
+      "path": "uploads/images/ilustrasi_keemasan_emas_lencana_berhias_golongan_.jpg",
+      "type": "image/jpeg",
+      "category": "Image",
+      "extension": "jpg",
+      "uploadTime": "2026-03-09T01:06:16.735Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/0de2c4ac0481e4849a645923228b80a150baf3c3",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/images/ilustrasi_keemasan_emas_lencana_berhias_golongan_.jpg",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/images/ilustrasi_keemasan_emas_lencana_berhias_golongan_.jpg",
+      "size": 5778,
+      "sizeReadable": "5.64 KB",
+      "downloads": 0
+    },
+    {
       "id": "mmigtqvta059sx5zyz",
       "name": "IMG-20260308-WA0178.jpg",
       "originalName": "IMG-20260308-WA0178.jpg",
@@ -740,13 +756,13 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2026-03-09T00:51:14.393Z",
+  "lastUpdated": "2026-03-09T01:06:16.735Z",
   "stats": {
-    "totalFiles": 64,
-    "totalSize": 16558011,
-    "totalSizeReadable": "15.79 MB",
+    "totalFiles": 65,
+    "totalSize": 16563789,
+    "totalSizeReadable": "15.80 MB",
     "byType": {
-      "Image": 7,
+      "Image": 8,
       "Other": 57
     }
   }
