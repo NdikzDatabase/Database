@@ -1,6 +1,22 @@
 {
   "files": [
     {
+      "id": "mmnysy7g8fxe15e0o6r",
+      "name": "welcome.jpg",
+      "originalName": "6zc8mk.jpg",
+      "path": "uploads/images/welcome.jpg",
+      "type": "image/jpeg",
+      "category": "Image",
+      "extension": "jpg",
+      "uploadTime": "2026-03-12T21:13:21.196Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/7702c1ac77ba3791d7243f78b78a17600c2e0e22",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/images/welcome.jpg",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/images/welcome.jpg",
+      "size": 38553,
+      "sizeReadable": "37.65 KB",
+      "downloads": 0
+    },
+    {
       "id": "mmihd34v2k85h22dwo9",
       "name": "ilustrasi_keemasan_emas_lencana_berhias_golongan_.jpg",
       "originalName": "ilustrasi,keemasan,emas,lencana,berhias,golongan….jpg",
@@ -756,13 +772,13 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2026-03-09T01:06:16.735Z",
+  "lastUpdated": "2026-03-12T21:13:21.196Z",
   "stats": {
-    "totalFiles": 65,
-    "totalSize": 16563789,
-    "totalSizeReadable": "15.80 MB",
+    "totalFiles": 66,
+    "totalSize": 16602342,
+    "totalSizeReadable": "15.83 MB",
     "byType": {
-      "Image": 8,
+      "Image": 9,
       "Other": 57
     }
   }
