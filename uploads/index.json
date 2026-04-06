@@ -1,6 +1,22 @@
 {
   "files": [
     {
+      "id": "mnmopg88rwq4m099ywb",
+      "name": "Oreo_Ice_Cream_Mochi.jpg",
+      "originalName": "Oreo Ice Cream Mochi.jpg",
+      "path": "uploads/images/Oreo_Ice_Cream_Mochi.jpg",
+      "type": "image/jpeg",
+      "category": "Image",
+      "extension": "jpg",
+      "uploadTime": "2026-04-06T04:22:37.928Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/73f7ef958da319f21ed5a653cf7cc36bd4b69973",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/images/Oreo_Ice_Cream_Mochi.jpg",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/images/Oreo_Ice_Cream_Mochi.jpg",
+      "size": 116904,
+      "sizeReadable": "114.16 KB",
+      "downloads": 0
+    },
+    {
       "id": "mnmo6fd5fr9ydlb7pmf",
       "name": "ilustrasi_keemasan_emas_lencana_berhias_golongan_.jpg",
       "originalName": "ilustrasi,keemasan,emas,lencana,berhias,golongan….jpg",
@@ -836,13 +852,13 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2026-04-06T04:07:50.345Z",
+  "lastUpdated": "2026-04-06T04:22:37.928Z",
   "stats": {
-    "totalFiles": 70,
-    "totalSize": 16723749,
-    "totalSizeReadable": "15.95 MB",
+    "totalFiles": 71,
+    "totalSize": 16840653,
+    "totalSizeReadable": "16.06 MB",
     "byType": {
-      "Image": 13,
+      "Image": 14,
       "Other": 57
     }
   }
