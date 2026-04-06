@@ -1,6 +1,22 @@
 {
   "files": [
     {
+      "id": "mnmpcmez805kzoklcip",
+      "name": "All_Mochidoki_Mochi_Ice_Cream_Flavors___Mochidoki.jpg",
+      "originalName": "All Mochidoki Mochi Ice Cream Flavors _ Mochidoki.jpg",
+      "path": "uploads/images/All_Mochidoki_Mochi_Ice_Cream_Flavors___Mochidoki.jpg",
+      "type": "image/jpeg",
+      "category": "Image",
+      "extension": "jpg",
+      "uploadTime": "2026-04-06T04:40:39.035Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/654e8cb6989b035269cfe21b7ef5abcba6e51bba",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/images/All_Mochidoki_Mochi_Ice_Cream_Flavors___Mochidoki.jpg",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/images/All_Mochidoki_Mochi_Ice_Cream_Flavors___Mochidoki.jpg",
+      "size": 33300,
+      "sizeReadable": "32.52 KB",
+      "downloads": 0
+    },
+    {
       "id": "mnmovz34r9qfwoxf1vi",
       "name": "Ichigo_daifuku____.jpg",
       "originalName": "Ichigo daifuku🍓❤️.jpg",
@@ -868,13 +884,13 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2026-04-06T04:27:42.305Z",
+  "lastUpdated": "2026-04-06T04:40:39.036Z",
   "stats": {
-    "totalFiles": 72,
-    "totalSize": 16891476,
-    "totalSizeReadable": "16.11 MB",
+    "totalFiles": 73,
+    "totalSize": 16924776,
+    "totalSizeReadable": "16.14 MB",
     "byType": {
-      "Image": 15,
+      "Image": 16,
       "Other": 57
     }
   }
