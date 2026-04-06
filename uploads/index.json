@@ -1,6 +1,22 @@
 {
   "files": [
     {
+      "id": "mnmovz34r9qfwoxf1vi",
+      "name": "Ichigo_daifuku____.jpg",
+      "originalName": "Ichigo daifuku🍓❤️.jpg",
+      "path": "uploads/images/Ichigo_daifuku____.jpg",
+      "type": "image/jpeg",
+      "category": "Image",
+      "extension": "jpg",
+      "uploadTime": "2026-04-06T04:27:42.304Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/288f37746062336203eec151c6d270d28ff44890",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/images/Ichigo_daifuku____.jpg",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/images/Ichigo_daifuku____.jpg",
+      "size": 50823,
+      "sizeReadable": "49.63 KB",
+      "downloads": 0
+    },
+    {
       "id": "mnmopg88rwq4m099ywb",
       "name": "Oreo_Ice_Cream_Mochi.jpg",
       "originalName": "Oreo Ice Cream Mochi.jpg",
@@ -852,13 +868,13 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2026-04-06T04:22:37.928Z",
+  "lastUpdated": "2026-04-06T04:27:42.305Z",
   "stats": {
-    "totalFiles": 71,
-    "totalSize": 16840653,
-    "totalSizeReadable": "16.06 MB",
+    "totalFiles": 72,
+    "totalSize": 16891476,
+    "totalSizeReadable": "16.11 MB",
     "byType": {
-      "Image": 14,
+      "Image": 15,
       "Other": 57
     }
   }
