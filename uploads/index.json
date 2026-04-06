@@ -1,6 +1,22 @@
 {
   "files": [
     {
+      "id": "mnmmffmr93bnfpsqcqc",
+      "name": "ilustrasi_keemasan_emas_lencana_berhias_golongan_.jpg",
+      "originalName": "ilustrasi,keemasan,emas,lencana,berhias,golongan….jpg",
+      "path": "uploads/images/ilustrasi_keemasan_emas_lencana_berhias_golongan_.jpg",
+      "type": "image/jpeg",
+      "category": "Image",
+      "extension": "jpg",
+      "uploadTime": "2026-04-06T03:18:51.363Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/76828f8d79adae22fc89f03d8738ffd86e4475aa",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/images/ilustrasi_keemasan_emas_lencana_berhias_golongan_.jpg",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/images/ilustrasi_keemasan_emas_lencana_berhias_golongan_.jpg",
+      "size": 5778,
+      "sizeReadable": "5.64 KB",
+      "downloads": 0
+    },
+    {
       "id": "mnkq61wv5nxbkyjrnr2",
       "name": "ec1f52af13fc7cc1de30daeec3097488.jpg",
       "originalName": "ec1f52af13fc7cc1de30daeec3097488.jpg",
@@ -78,22 +94,6 @@
       "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/images/welcome.jpg",
       "size": 38553,
       "sizeReadable": "37.65 KB",
-      "downloads": 0
-    },
-    {
-      "id": "mmihd34v2k85h22dwo9",
-      "name": "ilustrasi_keemasan_emas_lencana_berhias_golongan_.jpg",
-      "originalName": "ilustrasi,keemasan,emas,lencana,berhias,golongan….jpg",
-      "path": "uploads/images/ilustrasi_keemasan_emas_lencana_berhias_golongan_.jpg",
-      "type": "image/jpeg",
-      "category": "Image",
-      "extension": "jpg",
-      "uploadTime": "2026-03-09T01:06:16.735Z",
-      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/0de2c4ac0481e4849a645923228b80a150baf3c3",
-      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/images/ilustrasi_keemasan_emas_lencana_berhias_golongan_.jpg",
-      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/images/ilustrasi_keemasan_emas_lencana_berhias_golongan_.jpg",
-      "size": 5778,
-      "sizeReadable": "5.64 KB",
       "downloads": 0
     },
     {
@@ -836,7 +836,7 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2026-04-04T19:27:59.792Z",
+  "lastUpdated": "2026-04-06T03:18:51.364Z",
   "stats": {
     "totalFiles": 70,
     "totalSize": 16723749,
