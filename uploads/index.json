@@ -1,6 +1,22 @@
 {
   "files": [
     {
+      "id": "mnygtzcl3fmc6otny48",
+      "name": "b988d8b38e77e5f10e74e3696d0c9d78.jpg",
+      "originalName": "b988d8b38e77e5f10e74e3696d0c9d78.jpg",
+      "path": "uploads/images/b988d8b38e77e5f10e74e3696d0c9d78.jpg",
+      "type": "image/jpeg",
+      "category": "Image",
+      "extension": "jpg",
+      "uploadTime": "2026-04-14T10:15:26.517Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/77ecf19e9de5ce04b1301fe962e63ae0036021cd",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/images/b988d8b38e77e5f10e74e3696d0c9d78.jpg",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/images/b988d8b38e77e5f10e74e3696d0c9d78.jpg",
+      "size": 24729,
+      "sizeReadable": "24.15 KB",
+      "downloads": 0
+    },
+    {
       "id": "mnv717ng5r7hx0pfuwv",
       "name": "IMG92ee39ec9b350413a4f1798f905d163a.png",
       "originalName": "IMG92ee39ec9b350413a4f1798f905d163a.png",
@@ -916,13 +932,13 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2026-04-12T03:17:49.180Z",
+  "lastUpdated": "2026-04-14T10:15:26.517Z",
   "stats": {
-    "totalFiles": 75,
-    "totalSize": 17994843,
-    "totalSizeReadable": "17.16 MB",
+    "totalFiles": 76,
+    "totalSize": 18019572,
+    "totalSizeReadable": "17.18 MB",
     "byType": {
-      "Image": 18,
+      "Image": 19,
       "Other": 57
     }
   }
