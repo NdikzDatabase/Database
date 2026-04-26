@@ -1,6 +1,22 @@
 {
   "files": [
     {
+      "id": "mofjr4b346g4r8l19hd",
+      "name": "c8363ecd14acefdb7ccdb93d669cd871.jpg",
+      "originalName": "c8363ecd14acefdb7ccdb93d669cd871.jpg",
+      "path": "uploads/images/c8363ecd14acefdb7ccdb93d669cd871.jpg",
+      "type": "image/jpeg",
+      "category": "Image",
+      "extension": "jpg",
+      "uploadTime": "2026-04-26T09:09:16.815Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/590e489b323e2f43b8a67b52f480c15a678f97ff",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/images/c8363ecd14acefdb7ccdb93d669cd871.jpg",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/images/c8363ecd14acefdb7ccdb93d669cd871.jpg",
+      "size": 20454,
+      "sizeReadable": "19.97 KB",
+      "downloads": 0
+    },
+    {
       "id": "mofi732mg4u6hs2yr2",
       "name": "WhatsApp-Audio-2021-06-16-at-14.35.33.mp3",
       "originalName": "WhatsApp-Audio-2021-06-16-at-14.35.33.mp3",
@@ -1012,14 +1028,14 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2026-04-26T08:25:42.479Z",
+  "lastUpdated": "2026-04-26T09:09:16.815Z",
   "stats": {
-    "totalFiles": 81,
-    "totalSize": 19132269,
-    "totalSizeReadable": "18.25 MB",
+    "totalFiles": 82,
+    "totalSize": 19152723,
+    "totalSizeReadable": "18.27 MB",
     "byType": {
+      "Image": 24,
       "Audio": 1,
-      "Image": 23,
       "Other": 57
     }
   }
