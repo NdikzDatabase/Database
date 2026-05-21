@@ -1,6 +1,22 @@
 {
   "files": [
     {
+      "id": "mpex2xj2ku6jpr8t4x",
+      "name": "mochi.png",
+      "originalName": "mochi.png",
+      "path": "uploads/images/mochi.png",
+      "type": "image/png",
+      "category": "Image",
+      "extension": "png",
+      "uploadTime": "2026-05-21T03:14:19.070Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/c6b293746ca7a466fb91971ee37885124e5e933a",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/images/mochi.png",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/images/mochi.png",
+      "size": 74871,
+      "sizeReadable": "73.12 KB",
+      "downloads": 0
+    },
+    {
       "id": "mpewgqsm13949yjoci7m",
       "name": "How_to_read_a_Nutrition_Facts_Table__Nutrition_.jpg",
       "originalName": "How to read a Nutrition Facts Table_ Nutrition….jpg",
@@ -1108,13 +1124,13 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2026-05-21T02:57:03.910Z",
+  "lastUpdated": "2026-05-21T03:14:19.070Z",
   "stats": {
-    "totalFiles": 87,
-    "totalSize": 19422681,
-    "totalSizeReadable": "18.52 MB",
+    "totalFiles": 88,
+    "totalSize": 19497552,
+    "totalSizeReadable": "18.59 MB",
     "byType": {
-      "Image": 29,
+      "Image": 30,
       "Audio": 1,
       "Other": 57
     }
