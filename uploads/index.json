@@ -1,6 +1,22 @@
 {
   "files": [
     {
+      "id": "mpewgqsm13949yjoci7m",
+      "name": "How_to_read_a_Nutrition_Facts_Table__Nutrition_.jpg",
+      "originalName": "How to read a Nutrition Facts Table_ Nutrition….jpg",
+      "path": "uploads/images/How_to_read_a_Nutrition_Facts_Table__Nutrition_.jpg",
+      "type": "image/jpeg",
+      "category": "Image",
+      "extension": "jpg",
+      "uploadTime": "2026-05-21T02:57:03.910Z",
+      "commitUrl": "https://github.com/NdikzDatabase/Database/commit/8215d0ecf181c7b95ae9237b05202acfb407cdcd",
+      "rawUrl": "https://raw.githubusercontent.com/NdikzDatabase/Database/main/uploads/images/How_to_read_a_Nutrition_Facts_Table__Nutrition_.jpg",
+      "githubUrl": "https://github.com/NdikzDatabase/Database/blob/main/uploads/images/How_to_read_a_Nutrition_Facts_Table__Nutrition_.jpg",
+      "size": 60783,
+      "sizeReadable": "59.36 KB",
+      "downloads": 0
+    },
+    {
       "id": "mpew53n142uiqbj4366",
       "name": "62980094796879245.jpg",
       "originalName": "62980094796879245.jpg",
@@ -1092,13 +1108,13 @@
       "size": 48510
     }
   ],
-  "lastUpdated": "2026-05-21T02:48:00.686Z",
+  "lastUpdated": "2026-05-21T02:57:03.910Z",
   "stats": {
-    "totalFiles": 86,
-    "totalSize": 19361898,
-    "totalSizeReadable": "18.46 MB",
+    "totalFiles": 87,
+    "totalSize": 19422681,
+    "totalSizeReadable": "18.52 MB",
     "byType": {
-      "Image": 28,
+      "Image": 29,
       "Audio": 1,
       "Other": 57
     }
